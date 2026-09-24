@@ -1,0 +1,144 @@
+/* Custom Scrollbar for better UI */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(241, 245, 249, 0.5);
+}
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+.math-symbol {
+    font-family: 'Cambria Math', 'Times New Roman', serif;
+    font-style: italic;
+}
+
+/* Square-ruled notebook grid on white background */
+body {
+    background-color: #ffffff;
+    background-image:
+        linear-gradient(to right, rgba(148, 163, 184, 0.25) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(148, 163, 184, 0.25) 1px, transparent 1px);
+    background-size: 24px 24px;
+    font-family: 'Poppins', 'Segoe UI', Arial, sans-serif !important;
+}
+
+/* Mobile sidebar backdrop & scroll lock */
+#sidebarBackdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(23, 25, 35, 0.45);
+    z-index: 35;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+}
+#sidebarBackdrop.visible {
+    opacity: 1;
+    visibility: visible;
+}
+@media (min-width: 768px) {
+    #sidebarBackdrop { display: none !important; }
+}
+@media (max-width: 767.98px) {
+    body.sidebar-open { overflow: hidden; }
+}
+@media (max-width: 430px) {
+    header p.text-xs.text-slate-500.font-medium { display: none; }
+}
+
+/* ===== Modern textbook typography ===== */
+h1, h2, h3, h4 {
+    font-family: 'Poppins', 'Segoe UI', Arial, sans-serif !important;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+.font-sans {
+    font-family: 'Poppins', 'Segoe UI', Arial, sans-serif !important;
+}
+/* Modern header band */
+header {
+    background-color: rgba(255, 255, 255, 0.92) !important;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+}
+
+/* GCT ASSIST Loading Page */
+#loadingPage {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+    color: #fff;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+#loadingPage.loaded {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+#loadingPage .logo {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+    font-weight: 800;
+    font-size: 24px;
+    letter-spacing: 0.5px;
+    box-shadow: 0 8px 24px rgba(79, 70, 229, 0.4);
+}
+#loadingPage .title {
+    font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 3px;
+}
+#loadingPage .spinner {
+    width: 34px;
+    height: 34px;
+    border: 3px solid rgba(255, 255, 255, 0.15);
+    border-top-color: #818cf8;
+    border-radius: 50%;
+    animation: gctSpin 0.8s linear infinite;
+}
+@keyframes gctSpin {
+    to { transform: rotate(360deg); }
+}
+
+/* ===== Cute minimal fireworks on perfect quiz score ===== */
+#fireworks {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    overflow: hidden;
+}
+.fw-particle {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border-radius: 9999px;
+    background: var(--c, #f472b6);
+    box-shadow: 0 0 8px var(--c, #f472b6);
+    animation: fw-burst 0.95s ease-out forwards;
+}
+@keyframes fw-burst {
+    0% { transform: translate(0, 0) scale(1); opacity: 1; }
+    100% { transform: translate(var(--dx, 0px), var(--dy, 0px)) scale(0.15); opacity: 0; }
+}
