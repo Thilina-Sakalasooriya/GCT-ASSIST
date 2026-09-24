@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamentals of Statistical Thinking & Data Methodology</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            200: '#c7d2fe',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar for better UI */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(241, 245, 249, 0.5);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .math-symbol {
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased font-sans flex flex-col min-h-screen">
+
+    <!-- Top Header Bar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Mobile Menu Button & Logo -->
+                <div class="flex items-center space-x-3">
+                    <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+                            <i class="fa-solid fa-chart-pie text-xl"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-lg font-bold text-slate-900 leading-tight">StatMethodology</h1>
+                            <p class="text-xs text-slate-500 font-medium">Statistical Thinking & Data Methodology</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Global Search & Header Tools -->
+                <div class="flex items-center space-x-4">
+                    <div class="relative hidden sm:block w-64">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                        <input type="text" id="searchInput" placeholder="Search topics, scales, formulas..." 
+                               class="w-full pl-9 pr-4 py-1.5 text-sm bg-slate-100 border border-transparent rounded-lg focus:bg-white focus:border-brand-500 focus:outline-none transition-all">
+                    </div>
+                    <div class="flex items-center space-x-2 bg-brand-50 text-brand-700 px-3 py-1.5 rounded-lg text-xs font-semibold">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <span id="progressPercentage">0% Completed</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex-1 flex max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 gap-6">
+
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-white border-r border-slate-200 transform -translate-x-full md:translate-x-0 transition-transform duration-200 ease-in-out md:static md:w-64 md:border-r-0 md:bg-transparent flex-shrink-0 flex flex-col">
+            <div class="p-4 md:p-0 space-y-6">
+
+                <!-- Navigation Links -->
+                <nav class="space-y-1">
+                    <div class="px-3 mb-2 text-xs font-bold text-slate-400 uppercase tracking-wider">Course Curriculum</div>
+                    
+                    <button onclick="switchTab('lesson1')" id="nav-lesson1" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-brand-700 bg-brand-50 shadow-sm">
+                        <div class="flex items-center space-x-3 truncate">
+                            <i class="fa-solid fa-database text-brand-600"></i>
+                            <span class="truncate">1. Data Basics & Scales</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-xs opacity-70"></i>
+                    </button>
+
+                    <button onclick="switchTab('lesson2')" id="nav-lesson2" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+                        <div class="flex items-center space-x-3 truncate">
+                            <i class="fa-solid fa-chart-simple text-slate-500"></i>
+                            <span class="truncate">2. Data Organization</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-xs opacity-70"></i>
+                    </button>
+
+                    <button onclick="switchTab('lesson3')" id="nav-lesson3" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+                        <div class="flex items-center space-x-3 truncate">
+                            <i class="fa-solid fa-bullseye text-slate-500"></i>
+                            <span class="truncate">3. Central Tendency</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-xs opacity-70"></i>
+                    </button>
+
+                    <button onclick="switchTab('lesson4')" id="nav-lesson4" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+                        <div class="flex items-center space-x-3 truncate">
+                            <i class="fa-solid fa-arrows-left-right text-slate-500"></i>
+                            <span class="truncate">4. Measures of Dispersion</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-xs opacity-70"></i>
+                    </button>
+
+                    <div class="px-3 pt-4 mb-2 text-xs font-bold text-slate-400 uppercase tracking-wider">Interactive Tools</div>
+
+                    <button onclick="switchTab('calculators')" id="nav-calculators" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+                        <div class="flex items-center space-x-3 truncate">
+                            <i class="fa-solid fa-calculator text-amber-500"></i>
+                            <span class="truncate">Interactive Lab & Tools</span>
+                        </div>
+                        <span class="bg-amber-100 text-amber-800 text-[10px] px-1.5 py-0.5 rounded font-semibold">Live</span>
+                    </button>
+
+                    <button onclick="switchTab('quiz')" id="nav-quiz" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+                        <div class="flex items-center space-x-3 truncate">
+                            <i class="fa-solid fa-list-check text-emerald-500"></i>
+                            <span class="truncate">Knowledge Practice Quiz</span>
+                        </div>
+                        <span id="quizBadge" class="bg-slate-100 text-slate-600 text-[10px] px-1.5 py-0.5 rounded font-semibold">Test</span>
+                    </button>
+                </nav>
+
+                <!-- Helpful Quick Card -->
+                <div class="p-4 bg-slate-900 text-white rounded-2xl shadow-lg relative overflow-hidden">
+                    <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-brand-500/20 rounded-full blur-xl"></div>
+                    <h4 class="font-semibold text-sm mb-1 flex items-center space-x-2">
+                        <i class="fa-solid fa-lightbulb text-amber-400"></i>
+                        <span>Study Tip</span>
+                    </h4>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Pay special attention to the difference between <strong>Interval</strong> (arbitrary zero) and <strong>Ratio</strong> scales (absolute zero).
+                    </p>
+                </div>
+
+            </div>
+        </aside>
+
+        <!-- Main Workspace Area -->
+        <main class="flex-1 min-w-0">
+
+            <!-- LESSON 1 CONTENT -->
+            <section id="lesson1" class="tab-content space-y-6">
+                <!-- Lesson Header -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-brand-50 rounded-bl-full -z-0"></div>
+                    <div class="relative z-10">
+                        <div class="inline-flex items-center space-x-2 text-xs font-semibold bg-brand-100 text-brand-800 px-2.5 py-1 rounded-md mb-3">
+                            <span>Module 1</span>
+                            <span>•</span>
+                            <span>Core Concepts</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                            Introduction to Statistical Thinking & Data Basics
+                        </h2>
+                        <p class="mt-2 text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">
+                            Master the core distinction between raw data and actionable information, learn the fundamental role of statistical methodology, and explore the 4 levels of measurement scales.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Theory Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Concept 1: Statistical Thinking -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:border-slate-300 transition-all">
+                        <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-lg mb-4">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">Statistical Thinking & Data vs Info</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed mb-3">
+                            <strong>Statistical Thinking</strong> is a decision-making philosophy based on understanding, controlling, and describing variation in data.
+                        </p>
+                        <div class="space-y-2 text-xs bg-slate-50 p-3.5 rounded-xl border border-slate-100">
+                            <div class="flex items-start space-x-2">
+                                <span class="font-bold text-slate-700 min-w-[70px]">Data:</span>
+                                <span class="text-slate-600">Raw, unorganized facts, symbols, or numerical measurements (e.g., raw numbers like 70, 40, 15).</span>
+                            </div>
+                            <div class="flex items-start space-x-2">
+                                <span class="font-bold text-slate-700 min-w-[70px]">Information:</span>
+                                <span class="text-slate-600">Processed, structured, and interpreted data that provides meaningful context (e.g., Average score = 38.2%).</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Concept 2: Role & Objective -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:border-slate-300 transition-all">
+                        <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg mb-4">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">Objectives of Statistics</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed mb-3">
+                            Statistics provides mathematical procedures to convert raw facts into actionable insights.
+                        </p>
+                        <ul class="text-xs space-y-2 text-slate-600">
+                            <li class="flex items-center space-x-2">
+                                <i class="fa-solid fa-circle-check text-emerald-500"></i>
+                                <span><strong>Summarize Data:</strong> Condense large datasets into intuitive metrics.</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fa-solid fa-circle-check text-emerald-500"></i>
+                                <span><strong>Measure Variability:</strong> Quantify uncertainty and spread.</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <i class="fa-solid fa-circle-check text-emerald-500"></i>
+                                <span><strong>Infer Patterns:</strong> Draw general conclusions about populations from samples.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Deep Dive: Measurement Scales -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm">
+                    <h3 class="text-xl font-bold text-slate-900 mb-4 flex items-center space-x-2">
+                        <i class="fa-solid fa-ruler-combined text-brand-600"></i>
+                        <span>The 4 Scales of Measurement</span>
+                    </h3>
+                    <p class="text-sm text-slate-600 mb-6">
+                        Data variables are categorized into four hierarchical measurement scales. Higher levels retain the properties of lower levels with additional mathematical capabilities.
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <!-- Nominal -->
+                        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-all">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-bold text-slate-900">1. Nominal</span>
+                                <span class="text-[10px] font-semibold bg-slate-200 text-slate-700 px-2 py-0.5 rounded">Lowest</span>
+                            </div>
+                            <p class="text-xs text-slate-600 mb-3">Labels, categories, or names only. No order or numerical meaning.</p>
+                            <div class="text-[11px] bg-white p-2.5 rounded-lg border border-slate-200 text-slate-700">
+                                <strong>Examples:</strong> Hair Color, Gender, Eye Color, Zip Code, Marital Status.
+                            </div>
+                        </div>
+
+                        <!-- Ordinal -->
+                        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-all">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-bold text-slate-900">2. Ordinal</span>
+                                <span class="text-[10px] font-semibold bg-blue-100 text-blue-700 px-2 py-0.5 rounded">Ordered</span>
+                            </div>
+                            <p class="text-xs text-slate-600 mb-3">Ordered ranks or categories, but intervals between values are not uniform.</p>
+                            <div class="text-[11px] bg-white p-2.5 rounded-lg border border-slate-200 text-slate-700">
+                                <strong>Examples:</strong> Customer Satisfaction (Poor, Fair, Good), Class Rank, Education Level.
+                            </div>
+                        </div>
+
+                        <!-- Interval -->
+                        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-all">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-bold text-slate-900">3. Interval</span>
+                                <span class="text-[10px] font-semibold bg-amber-100 text-amber-800 px-2 py-0.5 rounded">Equal Intervals</span>
+                            </div>
+                            <p class="text-xs text-slate-600 mb-3">Meaningful distance between values, but <strong>no true/absolute zero point</strong>.</p>
+                            <div class="text-[11px] bg-white p-2.5 rounded-lg border border-slate-200 text-slate-700">
+                                <strong>Examples:</strong> Temperature (°C / °F), SAT Score, Calendar Year.
+                            </div>
+                        </div>
+
+                        <!-- Ratio -->
+                        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-all">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-bold text-slate-900">4. Ratio</span>
+                                <span class="text-[10px] font-semibold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">Absolute Zero</span>
+                            </div>
+                            <p class="text-xs text-slate-600 mb-3">Ordered with equal intervals AND a <strong>true absolute zero</strong> (absence of attribute).</p>
+                            <div class="text-[11px] bg-white p-2.5 rounded-lg border border-slate-200 text-slate-700">
+                                <strong>Examples:</strong> Height, Weight, Salary, Distance, Elapsed Time.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Practice Questions & Collapsible Solutions -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                    <h3 class="text-xl font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center space-x-2">
+                        <i class="fa-solid fa-pen-to-square text-brand-600"></i>
+                        <span>Lesson 1 Practice Exercises</span>
+                    </h3>
+
+                    <!-- Question 1 -->
+                    <div class="border border-slate-200 rounded-xl p-5 bg-slate-50/30 space-y-3">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-bold uppercase tracking-wider text-brand-600 bg-brand-50 px-2 py-0.5 rounded">Exercise 1.1</span>
+                            <span class="text-xs text-slate-400">Scale Identification</span>
+                        </div>
+                        <p class="text-sm font-medium text-slate-800">
+                            Classify each of the following variables into their corresponding scale of measurement: 
+                            <br><span class="text-slate-600 font-normal">a) Temperature in Celsius, b) SAT Exam Score, c) Student Height (cm), d) Customer Satisfaction rating (Low, Medium, High), e) Calendar Year (2024).</span>
+                        </p>
+                        <button onclick="toggleAnswer('ans-1-1')" class="text-xs font-semibold text-brand-600 hover:text-brand-800 flex items-center space-x-1 focus:outline-none">
+                            <span>Show Solution & Explanation</span>
+                            <i id="icon-ans-1-1" class="fa-solid fa-chevron-down text-[10px] transition-transform"></i>
+                        </button>
+                        <div id="ans-1-1" class="hidden mt-3 p-4 bg-emerald-50 border border-emerald-200 rounded-lg text-xs text-emerald-900 space-y-2">
+                            <p><strong>Solution & Reasoning:</strong></p>
+                            <ul class="list-disc pl-5 space-y-1 text-slate-700">
+                                <li><strong>Temperature in Celsius:</strong> <em>Interval Scale</em> (0°C does not mean complete absence of heat).</li>
+                                <li><strong>SAT Exam Score:</strong> <em>Interval Scale</em> (Scores do not start at a true absolute zero).</li>
+                                <li><strong>Student Height (cm):</strong> <em>Ratio Scale</em> (0 cm represents absolute zero height; 180cm is twice as tall as 90cm).</li>
+                                <li><strong>Customer Satisfaction:</strong> <em>Ordinal Scale</em> (Ordered hierarchy, but distance between categories is non-quantifiable).</li>
+                                <li><strong>Calendar Year:</strong> <em>Interval Scale</em> (Year 0 is arbitrary and does not mark the beginning of time).</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="border border-slate-200 rounded-xl p-5 bg-slate-50/30 space-y-3">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-bold uppercase tracking-wider text-brand-600 bg-brand-50 px-2 py-0.5 rounded">Exercise 1.2</span>
+                            <span class="text-xs text-slate-400">Conceptual Reasoning</span>
+                        </div>
+                        <p class="text-sm font-medium text-slate-800">
+                            Why is Temperature measured in Kelvin considered a Ratio scale, whereas Temperature measured in Celsius is an Interval scale?
+                        </p>
+                        <button onclick="toggleAnswer('ans-1-2')" class="text-xs font-semibold text-brand-600 hover:text-brand-800 flex items-center space-x-1 focus:outline-none">
+                            <span>Show Solution & Explanation</span>
+                            <i id="icon-ans-1-2" class="fa-solid fa-chevron-down text-[10px] transition-transform"></i>
+                        </button>
+                        <div id="ans-1-2" class="hidden mt-3 p-4 bg-emerald-50 border border-emerald-200 rounded-lg text-xs text-emerald-900 space-y-1">
+                            <p><strong>Solution:</strong></p>
+                            <p class="text-slate-700">
+                                <strong>Celsius</strong> uses an arbitrary zero point (the freezing point of water), meaning 0°C does not indicate an absence of thermal energy. Consequently, 40°C is not "twice as hot" as 20°C.
+                            </p>
+                            <p class="text-slate-700 mt-1">
+                                <strong>Kelvin</strong> has a true absolute zero (0 K = absolute zero, where molecular motion stops). Thus, 200 K represents twice the thermal kinetic energy of 100 K, fulfilling the requirement for a ratio scale.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- LESSON 2 CONTENT -->
+            <section id="lesson2" class="tab-content space-y-6 hidden">
+                <!-- Lesson Header -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-amber-50 rounded-bl-full -z-0"></div>
+                    <div class="relative z-10">
+                        <div class="inline-flex items-center space-x-2 text-xs font-semibold bg-amber-100 text-amber-800 px-2.5 py-1 rounded-md mb-3">
+                            <span>Module 2</span>
+                            <span>•</span>
+                            <span>Data Structuring</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                            Data Organization & Visualizations
+                        </h2>
+                        <p class="mt-2 text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">
+                            Learn how to transform raw chaotic datasets into Data Arrays, construct Stem-and-Leaf Plots (including comparative back-to-back plots), and build frequency distributions.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Theory Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Concept 1: Data Array & Range -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="text-lg font-bold text-slate-900 mb-2 flex items-center space-x-2">
+                            <i class="fa-solid fa-arrow-down-short-wide text-amber-500"></i>
+                            <span>1. Data Array & Range</span>
+                        </h3>
+                        <p class="text-sm text-slate-600 leading-relaxed mb-3">
+                            A <strong>Data Array</strong> is an arrangement of raw numerical observations in ascending or descending order.
+                        </p>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-700 space-y-2">
+                            <p><strong>Primary Benefit:</strong> Allows immediate identification of maximum and minimum values, facilitating quick calculation of the range.</p>
+                            <p class="font-mono bg-white p-2 rounded border border-slate-200">
+                                Range = Highest Value (H) - Lowest Value (L)
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Concept 2: Stem-and-Leaf Plot -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="text-lg font-bold text-slate-900 mb-2 flex items-center space-x-2">
+                            <i class="fa-solid fa-align-left text-amber-500"></i>
+                            <span>2. Stem-and-Leaf Plots</span>
+                        </h3>
+                        <p class="text-sm text-slate-600 leading-relaxed mb-3">
+                            A display tool that splits numbers into a <strong>Stem</strong> (leading digit/s) and a <strong>Leaf</strong> (trailing trailing digit).
+                        </p>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-700 space-y-2">
+                            <p><strong>Comparative / Back-to-Back Plots:</strong> Used to compare two distributions side-by-side using a single central stem.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Visualization Demo -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4">Stem-and-Leaf Display Structure</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Standard Single Stem-and-Leaf -->
+                        <div class="border border-slate-200 rounded-xl p-4 bg-slate-50">
+                            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Standard Stem-and-Leaf Plot</h4>
+                            <div class="font-mono text-xs space-y-1 bg-white p-4 rounded-lg border border-slate-200">
+                                <div class="grid grid-cols-12 border-b border-slate-200 font-bold pb-1 text-slate-400">
+                                    <span class="col-span-3 text-right pr-2">Stem</span>
+                                    <span class="col-span-9 pl-2">Leaf</span>
+                                </div>
+                                <div class="grid grid-cols-12 py-0.5"><span class="col-span-3 text-right font-bold text-brand-600 pr-2 border-r border-slate-300">1 |</span><span class="col-span-9 pl-2 tracking-widest text-slate-700">2 5 5 8</span></div>
+                                <div class="grid grid-cols-12 py-0.5"><span class="col-span-3 text-right font-bold text-brand-600 pr-2 border-r border-slate-300">2 |</span><span class="col-span-9 pl-2 tracking-widest text-slate-700">0 0 0 5 5</span></div>
+                                <div class="grid grid-cols-12 py-0.5"><span class="col-span-3 text-right font-bold text-brand-600 pr-2 border-r border-slate-300">3 |</span><span class="col-span-9 pl-2 tracking-widest text-slate-700">0 0 0 5 5</span></div>
+                                <div class="grid grid-cols-12 py-0.5"><span class="col-span-3 text-right font-bold text-brand-600 pr-2 border-r border-slate-300">4 |</span><span class="col-span-9 pl-2 tracking-widest text-slate-700">0 0 5 5</span></div>
+                            </div>
+                            <p class="text-[11px] text-slate-500 mt-2">Key: 1 | 2 = 12</p>
+                        </div>
+
+                        <!-- Back to Back Stem-and-Leaf -->
+                        <div class="border border-slate-200 rounded-xl p-4 bg-slate-50">
+                            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Back-to-Back Stem-and-Leaf Plot</h4>
+                            <div class="font-mono text-xs space-y-1 bg-white p-4 rounded-lg border border-slate-200">
+                                <div class="grid grid-cols-11 border-b border-slate-200 font-bold pb-1 text-slate-400 text-center">
+                                    <span class="col-span-4 text-right pr-2">Group A</span>
+                                    <span class="col-span-3 text-center">Stem</span>
+                                    <span class="col-span-4 text-left pl-2">Group B</span>
+                                </div>
+                                <div class="grid grid-cols-11 py-0.5 text-center">
+                                    <span class="col-span-4 text-right pr-2 tracking-widest text-slate-700">8 5</span>
+                                    <span class="col-span-3 font-bold text-brand-600 border-x border-slate-300">1</span>
+                                    <span class="col-span-4 text-left pl-2 tracking-widest text-slate-700">2 5</span>
+                                </div>
+                                <div class="grid grid-cols-11 py-0.5 text-center">
+                                    <span class="col-span-4 text-right pr-2 tracking-widest text-slate-700">5 0 0</span>
+                                    <span class="col-span-3 font-bold text-brand-600 border-x border-slate-300">2</span>
+                                    <span class="col-span-4 text-left pl-2 tracking-widest text-slate-700">0 0 5</span>
+                                </div>
+                                <div class="grid grid-cols-11 py-0.5 text-center">
+                                    <span class="col-span-4 text-right pr-2 tracking-widest text-slate-700">5 0 0 0</span>
+                                    <span class="col-span-3 font-bold text-brand-600 border-x border-slate-300">3</span>
+                                    <span class="col-span-4 text-left pl-2 tracking-widest text-slate-700">0 5</span>
+                                </div>
+                            </div>
+                            <p class="text-[11px] text-slate-500 mt-2">Leaves for Group A are read backwards from right to left.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lesson 2 Practice Exercises -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                    <h3 class="text-xl font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center space-x-2">
+                        <i class="fa-solid fa-pen-to-square text-brand-600"></i>
+                        <span>Lesson 2 Practice Exercises</span>
+                    </h3>
+
+                    <!-- Question 2.1 -->
+                    <div class="border border-slate-200 rounded-xl p-5 bg-slate-50/30 space-y-3">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-bold uppercase tracking-wider text-brand-600 bg-brand-50 px-2 py-0.5 rounded">Exercise 2.1</span>
+                            <span class="text-xs text-slate-400">Data Array & Range</span>
+                        </div>
+                        <p class="text-sm font-medium text-slate-800">
+                            Given the following raw dataset representing exam scores: 
+                            <span class="font-mono bg-slate-100 px-2 py-0.5 rounded text-xs">[45, 12, 70, 30, 55, 20, 65, 15]</span>, 
+                            construct a Data Array and determine the Range.
+                        </p>
+                        <button onclick="toggleAnswer('ans-2-1')" class="text-xs font-semibold text-brand-600 hover:text-brand-800 flex items-center space-x-1 focus:outline-none">
+                            <span>Show Solution & Explanation</span>
+                            <i id="icon-ans-2-1" class="fa-solid fa-chevron-down text-[10px] transition-transform"></i>
+                        </button>
+                        <div id="ans-2-1" class="hidden mt-3 p-4 bg-emerald-50 border border-emerald-200 rounded-lg text-xs text-emerald-900 space-y-2">
+                            <p><strong>Step-by-Step Solution:</strong></p>
+                            <ol class="list-decimal pl-5 space-y-1 text-slate-700">
+                                <li><strong>Sort into Data Array (Ascending):</strong> <span class="font-mono bg-white px-2 py-0.5 rounded">[12, 15, 20, 30, 45, 55, 65, 70]</span></li>
+                                <li><strong>Identify Minimum & Maximum:</strong> Lowest (L) = 12, Highest (H) = 70.</li>
+                                <li><strong>Calculate Range:</strong> <span class="font-mono">Range = H - L = 70 - 12 = 58</span></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- LESSON 3 CONTENT -->
+            <section id="lesson3" class="tab-content space-y-6 hidden">
+                <!-- Lesson Header -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-bl-full -z-0"></div>
+                    <div class="relative z-10">
+                        <div class="inline-flex items-center space-x-2 text-xs font-semibold bg-indigo-100 text-indigo-800 px-2.5 py-1 rounded-md mb-3">
+                            <span>Module 3</span>
+                            <span>•</span>
+                            <span>Central Tendency</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                            Descriptive Statistics - Measures of Central Tendency
+                        </h2>
+                        <p class="mt-2 text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">
+                            Differentiate between Descriptive and Inferential statistics, and learn how to compute and interpret the Mean, Median, and Mode.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Descriptive vs Inferential -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-900 mb-2 flex items-center space-x-2">
+                            <i class="fa-solid fa-chart-line text-brand-600"></i>
+                            <span>Descriptive Statistics</span>
+                        </h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Methods used to organize, summarize, and present data in an informative way (e.g., calculating average class performance).
+                        </p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-900 mb-2 flex items-center space-x-2">
+                            <i class="fa-solid fa-project-diagram text-brand-600"></i>
+                            <span>Inferential Statistics</span>
+                        </h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Methods used to estimate or draw conclusions about a larger population based on sample data (e.g., hypothesis testing, polling).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Measures Formulas -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                    <h3 class="text-xl font-bold text-slate-900 border-b border-slate-100 pb-3">The Three Main Averages</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Mean -->
+                        <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2">
+                            <h4 class="font-bold text-slate-900 text-base">Arithmetic Mean (x̄)</h4>
+                            <p class="text-xs text-slate-600">Sum of all observations divided by the total number of observations (N).</p>
+                            <div class="p-2 bg-white rounded border border-slate-200 font-mono text-xs text-center text-slate-800">
+                                x̄ = ( Σ xᵢ ) / N
+                            </div>
+                            <p class="text-[11px] text-slate-500"><em>Note: Sensitive to extreme outliers.</em></p>
+                        </div>
+
+                        <!-- Median -->
+                        <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2">
+                            <h4 class="font-bold text-slate-900 text-base">Median (M)</h4>
+                            <p class="text-xs text-slate-600">The middle observation when data is arranged in order.</p>
+                            <div class="p-2 bg-white rounded border border-slate-200 font-mono text-xs text-center text-slate-800">
+                                Position = (N + 1) / 2
+                            </div>
+                            <p class="text-[11px] text-slate-500"><em>Note: Robust against outliers.</em></p>
+                        </div>
+
+                        <!-- Mode -->
+                        <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2">
+                            <h4 class="font-bold text-slate-900 text-base">Mode</h4>
+                            <p class="text-xs text-slate-600">The most frequently occurring value in the dataset.</p>
+                            <div class="p-2 bg-white rounded border border-slate-200 font-mono text-xs text-center text-slate-800">
+                                Uni / Bi / Multi-Modal
+                            </div>
+                            <p class="text-[11px] text-slate-500"><em>Note: Datasets can have 0, 1, or multiple modes.</em></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comprehensive Question from Notes -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <h3 class="text-xl font-bold text-slate-900 flex items-center space-x-2">
+                            <i class="fa-solid fa-file-invoice text-brand-600"></i>
+                            <span>Comprehensive Worked Dataset (25 Observations)</span>
+                        </h3>
+                        <span class="text-xs bg-brand-100 text-brand-800 font-bold px-2.5 py-1 rounded-md">From Notes</span>
+                    </div>
+
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                        <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Raw Dataset (N = 25):</p>
+                        <p class="font-mono text-xs sm:text-sm text-slate-800 bg-white p-3 rounded-lg border border-slate-200 leading-relaxed">
+                            [70, 40, 15, 60, 30, 50, 20, 45, 35, 12, 55, 25, 65, 30, 40, 20, 18, 50, 35, 45, 15, 20, 55, 30, 25]
+                        </p>
+                    </div>
+
+                    <!-- Toggle Solution Button -->
+                    <button onclick="toggleAnswer('ans-3-1')" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold text-sm rounded-xl transition-all shadow-md flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-calculator"></i>
+                        <span>Calculate & View Step-by-Step Solutions (Mean, Median, Mode)</span>
+                    </button>
+
+                    <div id="ans-3-1" class="hidden p-6 bg-slate-50 border border-slate-200 rounded-2xl space-y-6">
+                        
+                        <!-- Sorted Array -->
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Step 1: Sorted Data Array</h4>
+                            <p class="font-mono text-xs bg-white p-3 rounded-lg border border-slate-200 text-slate-800">
+                                [12, 15, 15, 18, 20, 20, 20, 25, 25, 30, 30, 30, <strong>35</strong>, 35, 40, 40, 45, 45, 50, 50, 55, 55, 60, 65, 70]
+                            </p>
+                        </div>
+
+                        <!-- Calculations Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                            <!-- Mean Calculation -->
+                            <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-1">
+                                <span class="font-bold text-slate-900 block mb-1">Mean Calculation:</span>
+                                <p class="text-slate-600">Sum of values (Σx) = 890</p>
+                                <p class="text-slate-600">Number of values (N) = 25</p>
+                                <p class="font-mono text-brand-700 font-bold text-sm mt-2">x̄ = 890 / 25 = 35.60</p>
+                            </div>
+
+                            <!-- Median Calculation -->
+                            <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-1">
+                                <span class="font-bold text-slate-900 block mb-1">Median Calculation:</span>
+                                <p class="text-slate-600">Position = (25 + 1) / 2 = 13th term</p>
+                                <p class="text-slate-600">13th term in sorted array = 35</p>
+                                <p class="font-mono text-brand-700 font-bold text-sm mt-2">Median = 35.00</p>
+                            </div>
+
+                            <!-- Mode Calculation -->
+                            <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-1">
+                                <span class="font-bold text-slate-900 block mb-1">Mode Calculation:</span>
+                                <p class="text-slate-600">Value 20 occurs 3 times</p>
+                                <p class="text-slate-600">Value 30 occurs 3 times</p>
+                                <p class="font-mono text-brand-700 font-bold text-sm mt-2">Bimodal: 20 & 30</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- LESSON 4 CONTENT -->
+            <section id="lesson4" class="tab-content space-y-6 hidden">
+                <!-- Lesson Header -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-bl-full -z-0"></div>
+                    <div class="relative z-10">
+                        <div class="inline-flex items-center space-x-2 text-xs font-semibold bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-md mb-3">
+                            <span>Module 4</span>
+                            <span>•</span>
+                            <span>Data Spread & Consistency</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                            Descriptive Statistics - Measures of Dispersion
+                        </h2>
+                        <p class="mt-2 text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">
+                            Understand how data spreads around central values using Range, Variance, Standard Deviation, and the Coefficient of Variation (CV) for consistency testing.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Dispersion Formulas Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Variance & Standard Deviation -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <h3 class="font-bold text-slate-900 text-lg flex items-center space-x-2">
+                            <i class="fa-solid fa-square-root-variable text-emerald-600"></i>
+                            <span>Variance & Standard Deviation</span>
+                        </h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Measures average squared deviation around the mean.
+                        </p>
+                        <div class="space-y-2 font-mono text-xs bg-slate-50 p-3 rounded-xl border border-slate-200">
+                            <div>Sample Variance (s²) = Σ(xᵢ - x̄)² / (N - 1)</div>
+                            <div>Standard Deviation (s) = √s²</div>
+                        </div>
+                    </div>
+
+                    <!-- Coefficient of Variation (CV) -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <h3 class="font-bold text-slate-900 text-lg flex items-center space-x-2">
+                            <i class="fa-solid fa-percent text-emerald-600"></i>
+                            <span>Coefficient of Variation (CV)</span>
+                        </h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            A relative measure of risk/spread expressing standard deviation as a percentage of the mean.
+                        </p>
+                        <div class="font-mono text-xs bg-slate-50 p-3 rounded-xl border border-slate-200 text-center">
+                            CV = ( Standard Deviation / Mean ) × 100%
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Consistency Rules Callout -->
+                <div class="p-6 bg-emerald-900 text-white rounded-2xl shadow-md space-y-3">
+                    <h4 class="font-bold text-base flex items-center space-x-2 text-emerald-300">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                        <span>Consistency Interpretation Rule</span>
+                    </h4>
+                    <p class="text-xs sm:text-sm text-emerald-100 leading-relaxed">
+                        When comparing two datasets or performance series (e.g., two factories, two investments):
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs pt-1">
+                        <div class="p-3 bg-emerald-800/60 rounded-xl border border-emerald-700/50">
+                            <span class="font-bold text-emerald-300 block mb-1">Lower CV = Higher Consistency</span>
+                            Smaller relative spread around mean → More reliable / Less variable.
+                        </div>
+                        <div class="p-3 bg-emerald-800/60 rounded-xl border border-emerald-700/50">
+                            <span class="font-bold text-emerald-300 block mb-1">Higher CV = Lower Consistency</span>
+                            Greater relative variability → Higher risk / Less uniform performance.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Practice Questions -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                    <h3 class="text-xl font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center space-x-2">
+                        <i class="fa-solid fa-pen-to-square text-brand-600"></i>
+                        <span>Lesson 4 Consistency Exercises</span>
+                    </h3>
+
+                    <!-- Question 4.1 -->
+                    <div class="border border-slate-200 rounded-xl p-5 bg-slate-50/30 space-y-3">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-bold uppercase tracking-wider text-brand-600 bg-brand-50 px-2 py-0.5 rounded">Exercise 4.1</span>
+                            <span class="text-xs text-slate-400">Consistency Comparison</span>
+                        </div>
+                        <p class="text-sm font-medium text-slate-800">
+                            Machine A has a mean production output of 200 units with a standard deviation of 10. 
+                            Machine B has a mean production output of 500 units with a standard deviation of 20. 
+                            Which machine exhibits higher consistency?
+                        </p>
+                        <button onclick="toggleAnswer('ans-4-1')" class="text-xs font-semibold text-brand-600 hover:text-brand-800 flex items-center space-x-1 focus:outline-none">
+                            <span>Show Solution & Calculation</span>
+                            <i id="icon-ans-4-1" class="fa-solid fa-chevron-down text-[10px] transition-transform"></i>
+                        </button>
+                        <div id="ans-4-1" class="hidden mt-3 p-4 bg-emerald-50 border border-emerald-200 rounded-lg text-xs text-emerald-900 space-y-2">
+                            <p><strong>Step-by-Step Calculation:</strong></p>
+                            <ul class="list-disc pl-5 space-y-1 text-slate-700">
+                                <li><strong>CV for Machine A:</strong> <span class="font-mono">(10 / 200) × 100% = 5.0%</span></li>
+                                <li><strong>CV for Machine B:</strong> <span class="font-mono">(20 / 500) × 100% = 4.0%</span></li>
+                            </ul>
+                            <p class="text-slate-800 font-semibold mt-2">
+                                Conclusion: Machine B has a lower CV (4.0% vs 5.0%), which means Machine B is <strong>more consistent</strong> in its production output.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CALCULATORS / INTERACTIVE LAB CONTENT -->
+            <section id="calculators" class="tab-content space-y-6 hidden">
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+                    <div class="inline-flex items-center space-x-2 text-xs font-semibold bg-amber-100 text-amber-800 px-2.5 py-1 rounded-md mb-3">
+                        <span>Interactive Toolset</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                        Real-Time Statistical Analysis Lab
+                    </h2>
+                    <p class="mt-2 text-slate-600 text-sm">
+                        Enter any comma-separated numbers below to automatically generate Data Arrays, Stem-and-Leaf plots, and complete descriptive statistics.
+                    </p>
+                </div>
+
+                <!-- Interactive Calculator Component -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                    
+                    <!-- Input Section -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">
+                            Enter Raw Numbers (Comma Separated):
+                        </label>
+                        <div class="flex gap-2">
+                            <input type="text" id="userDataset" 
+                                   value="70, 40, 15, 60, 30, 50, 20, 45, 35, 12, 55, 25, 65, 30, 40, 20, 18, 50, 35, 45, 15, 20, 55, 30, 25" 
+                                   class="flex-1 px-4 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-brand-500 focus:outline-none font-mono">
+                            <button onclick="calculateUserDataset()" class="px-5 py-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold text-sm rounded-xl transition-all shadow-sm flex items-center space-x-2">
+                                <i class="fa-solid fa-play"></i>
+                                <span>Analyze</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Output Results Cards -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center">
+                            <span class="text-xs text-slate-500 font-medium block">Mean (x̄)</span>
+                            <span id="calcMean" class="text-lg sm:text-2xl font-extrabold text-brand-600 font-mono">35.60</span>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center">
+                            <span class="text-xs text-slate-500 font-medium block">Median</span>
+                            <span id="calcMedian" class="text-lg sm:text-2xl font-extrabold text-brand-600 font-mono">35.00</span>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center">
+                            <span class="text-xs text-slate-500 font-medium block">Mode</span>
+                            <span id="calcMode" class="text-lg sm:text-2xl font-extrabold text-brand-600 font-mono">20, 30</span>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center">
+                            <span class="text-xs text-slate-500 font-medium block">Range</span>
+                            <span id="calcRange" class="text-lg sm:text-2xl font-extrabold text-brand-600 font-mono">58</span>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center">
+                            <span class="text-xs text-slate-500 font-medium block">Std Deviation (s)</span>
+                            <span id="calcSD" class="text-lg sm:text-2xl font-extrabold text-emerald-600 font-mono">16.32</span>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center">
+                            <span class="text-xs text-slate-500 font-medium block">Variance (s²)</span>
+                            <span id="calcVar" class="text-lg sm:text-2xl font-extrabold text-emerald-600 font-mono">266.33</span>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center">
+                            <span class="text-xs text-slate-500 font-medium block">Coeff. Variation (CV)</span>
+                            <span id="calcCV" class="text-lg sm:text-2xl font-extrabold text-amber-600 font-mono">45.84%</span>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center">
+                            <span class="text-xs text-slate-500 font-medium block">Count (N)</span>
+                            <span id="calcCount" class="text-lg sm:text-2xl font-extrabold text-slate-700 font-mono">25</span>
+                        </div>
+                    </div>
+
+                    <!-- Generated Data Array & Stem Plot -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                        <div class="space-y-2">
+                            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider">Sorted Data Array:</h4>
+                            <div id="calcSortedArray" class="p-3 bg-slate-100 rounded-xl font-mono text-xs text-slate-800 border border-slate-200 break-words">
+                                12, 15, 15, 18, 20, 20, 20, 25, 25, 30, 30, 30, 35, 35, 40, 40, 45, 45, 50, 50, 55, 55, 60, 65, 70
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider">Generated Stem-and-Leaf Plot:</h4>
+                            <div id="calcStemPlot" class="p-3 bg-slate-100 rounded-xl font-mono text-xs text-slate-800 border border-slate-200 space-y-0.5">
+                                <!-- Dynamic JS Output -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- PRACTICE QUIZ CONTENT -->
+            <section id="quiz" class="tab-content space-y-6 hidden">
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+                    <div class="inline-flex items-center space-x-2 text-xs font-semibold bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-md mb-3">
+                        <span>Assessment Center</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                        Interactive Knowledge Check
+                    </h2>
+                    <p class="mt-2 text-slate-600 text-sm">
+                        Test your mastery across all four course modules with immediate feedback.
+                    </p>
+                </div>
+
+                <!-- Quiz Container -->
+                <div id="quizContainer" class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                    <!-- Dynamic Quiz Content Rendered via JS -->
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // State tracking
+        let activeTab = 'lesson1';
+        let userQuizAnswers = {};
+
+        // DOM Elements
+        document.addEventListener("DOMContentLoaded", () => {
+            calculateUserDataset();
+            renderQuiz();
+            updateProgress();
+        });
+
+        // Tab Navigation Switcher
+        function switchTab(tabId) {
+            activeTab = tabId;
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-brand-50', 'text-brand-700', 'shadow-sm');
+                btn.classList.add('text-slate-600');
+            });
+
+            const currentTab = document.getElementById(tabId);
+            const currentNav = document.getElementById(`nav-${tabId}`);
+
+            if (currentTab) currentTab.classList.remove('hidden');
+            if (currentNav) {
+                currentNav.classList.add('bg-brand-50', 'text-brand-700', 'shadow-sm');
+                currentNav.classList.remove('text-slate-600');
+            }
+
+            // Close mobile sidebar if open
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar.classList.contains('translate-x-0')) {
+                sidebar.classList.remove('translate-x-0');
+                sidebar.classList.add('-translate-x-full');
+            }
+
+            updateProgress();
+        }
+
+        // Toggle Solution Helper
+        function toggleAnswer(id) {
+            const el = document.getElementById(id);
+            const icon = document.getElementById(`icon-${id}`);
+            if (el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+                if (icon) icon.style.transform = 'rotate(180deg)';
+            } else {
+                el.classList.add('hidden');
+                if (icon) icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Mobile Sidebar Toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                sidebar.classList.add('translate-x-0');
+            } else {
+                sidebar.classList.remove('translate-x-0');
+                sidebar.classList.add('-translate-x-full');
+            }
+        });
+
+        function calculateUserDataset() {
+            const rawInput = document.getElementById('userDataset').value;
+            const numbers = rawInput.split(',')
+                                    .map(n => parseFloat(n.trim()))
+                                    .filter(n => !isNaN(n));
+
+            if (numbers.length === 0) {
+                return;
+            }
+
+            // Sorted Data Array
+            const sorted = [...numbers].sort((a, b) => a - b);
+            const N = sorted.length;
+            const sum = sorted.reduce((a, b) => a + b, 0);
+            const mean = sum / N;
+
+            // Median
+            let median = 0;
+            if (N % 2 === 0) {
+                median = (sorted[N/2 - 1] + sorted[N/2]) / 2;
+            } else {
+                median = sorted[Math.floor(N/2)];
+            }
+
+            // Mode
+            const freq = {};
+            let maxFreq = 0;
+            sorted.forEach(num => {
+                freq[num] = (freq[num] || 0) + 1;
+                if (freq[num] > maxFreq) maxFreq = freq[num];
+            });
+
+            let modes = [];
+            if (maxFreq > 1) {
+                for (let key in freq) {
+                    if (freq[key] === maxFreq) modes.push(key);
+                }
+            } else {
+                modes = ["No Mode"];
+            }
+
+            // Range
+            const min = sorted[0];
+            const max = sorted[N - 1];
+            const range = max - min;
+
+            // Variance & Standard Deviation (Sample)
+            const sumSqDiff = sorted.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0);
+            const variance = N > 1 ? sumSqDiff / (N - 1) : 0;
+            const sd = Math.sqrt(variance);
+            const cv = mean !== 0 ? (sd / mean) * 100 : 0;
+
+            // Render Output Elements
+            document.getElementById('calcMean').innerText = mean.toFixed(2);
+            document.getElementById('calcMedian').innerText = median.toFixed(2);
+            document.getElementById('calcMode').innerText = modes.join(', ');
+            document.getElementById('calcRange').innerText = range;
+            document.getElementById('calcSD').innerText = sd.toFixed(2);
+            document.getElementById('calcVar').innerText = variance.toFixed(2);
+            document.getElementById('calcCV').innerText = cv.toFixed(2) + "%";
+            document.getElementById('calcCount').innerText = N;
+            document.getElementById('calcSortedArray').innerText = sorted.join(', ');
+
+            // Build Stem-and-Leaf
+            const stems = {};
+            sorted.forEach(num => {
+                const stem = Math.floor(num / 10);
+                const leaf = Math.abs(Math.floor(num % 10));
+                if (!stems[stem]) stems[stem] = [];
+                stems[stem].push(leaf);
+            });
+
+            let stemHTML = '';
+            for (let stem in stems) {
+                stemHTML += `<div class="flex"><span class="w-12 text-right font-bold border-r border-slate-300 pr-2 text-brand-600">${stem} |</span><span class="pl-2 tracking-widest">${stems[stem].join(' ')}</span></div>`;
+            }
+            document.getElementById('calcStemPlot').innerHTML = stemHTML || "Invalid for single numbers";
+        }
+
+        const quizQuestions = [
+            {
+                id: 1,
+                question: "Which scale of measurement contains a true absolute zero point representing total absence of the attribute?",
+                options: ["Nominal Scale", "Ordinal Scale", "Interval Scale", "Ratio Scale"],
+                correct: 3,
+                explanation: "The Ratio scale is the only measurement scale that features a true absolute zero (e.g., height, weight, distance)."
+            },
+            {
+                id: 2,
+                question: "If a company measures customer satisfaction as 'Poor', 'Satisfactory', or 'Excellent', which measurement scale is being used?",
+                options: ["Nominal", "Ordinal", "Interval", "Ratio"],
+                correct: 1,
+                explanation: "Ordinal scales rank categories in a specific order, though the exact numerical gap between ranks is not defined."
+            },
+            {
+                id: 3,
+                question: "Dataset A has a Coefficient of Variation (CV) of 12%, while Dataset B has a CV of 25%. Which dataset is more consistent?",
+                options: ["Dataset A", "Dataset B", "Both have identical consistency", "Cannot be determined"],
+                correct: 0,
+                explanation: "Lower Coefficient of Variation (CV) indicates lower relative variability and higher overall consistency."
+            },
+            {
+                id: 4,
+                question: "What is the primary difference between Descriptive Statistics and Inferential Statistics?",
+                options: [
+                    "Descriptive statistics handles formulas, Inferential uses graphs.",
+                    "Descriptive summarizes sample data; Inferential draws conclusions about a population.",
+                    "Descriptive uses Ratio scales only; Inferential uses Nominal scales.",
+                    "There is no difference."
+                ],
+                correct: 1,
+                explanation: "Descriptive statistics organizes and summarizes known sample data, while inferential statistics uses sample data to make general conclusions about larger populations."
+            }
+        ];
+
+        function renderQuiz() {
+            const container = document.getElementById('quizContainer');
+            let html = '<div class="space-y-6">';
+
+            quizQuestions.forEach((q, idx) => {
+                html += `
+                    <div class="border border-slate-200 p-5 rounded-2xl bg-slate-50/50 space-y-3">
+                        <p class="font-bold text-sm text-slate-900">${idx + 1}. ${q.question}</p>
+                        <div class="space-y-2">
+                `;
+
+                q.options.forEach((opt, optIdx) => {
+                    html += `
+                        <label class="flex items-center space-x-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition-all text-xs font-medium text-slate-700">
+                            <input type="radio" name="q_${q.id}" value="${optIdx}" onclick="selectQuizOption(${q.id}, ${optIdx})" class="text-brand-600 focus:ring-brand-500">
+                            <span>${opt}</span>
+                        </label>
+                    `;
+                });
+
+                html += `
+                        </div>
+                        <div id="quiz-feedback-${q.id}" class="hidden p-3 rounded-lg text-xs font-medium"></div>
+                    </div>
+                `;
+            });
+
+            html += `
+                <button onclick="submitQuiz()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl transition-all shadow-md">
+                    Submit Quiz Answers
+                </button>
+            </div>`;
+
+            container.innerHTML = html;
+        }
+
+        function selectQuizOption(qId, optionIdx) {
+            userQuizAnswers[qId] = optionIdx;
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            quizQuestions.forEach(q => {
+                const feedbackEl = document.getElementById(`quiz-feedback-${q.id}`);
+                const selected = userQuizAnswers[q.id];
+
+                if (feedbackEl) {
+                    feedbackEl.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'bg-red-100', 'text-red-800');
+                    if (selected === q.correct) {
+                        score++;
+                        feedbackEl.classList.add('bg-emerald-100', 'text-emerald-800');
+                        feedbackEl.innerHTML = `<i class="fa-solid fa-circle-check"></i> <strong>Correct!</strong> ${q.explanation}`;
+                    } else {
+                        feedbackEl.classList.add('bg-red-100', 'text-red-800');
+                        feedbackEl.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> <strong>Incorrect.</strong> ${q.explanation}`;
+                    }
+                }
+            });
+
+            document.getElementById('quizBadge').innerText = `Score: ${score}/${quizQuestions.length}`;
+            updateProgress();
+        }
+
+        function updateProgress() {
+            // Simple tracker calculation
+            const navs = ['lesson1', 'lesson2', 'lesson3', 'lesson4'];
+            const currentIndex = navs.indexOf(activeTab);
+            let pct = 25;
+            if (currentIndex !== -1) {
+                pct = (currentIndex + 1) * 25;
+            } else if (activeTab === 'calculators' || activeTab === 'quiz') {
+                pct = 100;
+            }
+            document.getElementById('progressPercentage').innerText = `${pct}% Progress`;
+        }
+    </script>
+</body>
+</html>
