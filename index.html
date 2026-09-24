@@ -9,7 +9,7 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&family=Playfair+Display:wght@600;700;800&family=Permanent+Marker&family=Shadows+Into+Light&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -95,10 +95,10 @@
             <div class="p-4 md:p-0 space-y-6">
 
                 <!-- Navigation Links -->
-                <nav class="space-y-1">
+                <nav class="nav-pane space-y-1">
                     <div class="px-3 mb-2 text-xs font-bold text-slate-400 uppercase tracking-wider">Lessons</div>
                     
-                    <button onclick="switchTab('lesson1')" id="nav-lesson1" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-brand-700 bg-brand-50 shadow-sm">
+                    <button onclick="switchTab('lesson1')" id="nav-lesson1" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all border border-black bg-white text-slate-900 shadow-sm">
                         <div class="flex items-center space-x-3 truncate">
                             <i class="fa-solid fa-database text-brand-600"></i>
                             <span class="truncate">1. Data Basics & Scales</span>
@@ -106,7 +106,7 @@
                         <i class="fa-solid fa-chevron-right text-xs opacity-70"></i>
                     </button>
 
-                    <button onclick="switchTab('lesson2')" id="nav-lesson2" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+                    <button onclick="switchTab('lesson2')" id="nav-lesson2" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all border border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100">
                         <div class="flex items-center space-x-3 truncate">
                             <i class="fa-solid fa-chart-simple text-slate-500"></i>
                             <span class="truncate">2. Data Organization</span>
@@ -114,7 +114,7 @@
                         <i class="fa-solid fa-chevron-right text-xs opacity-70"></i>
                     </button>
 
-                    <button onclick="switchTab('lesson3')" id="nav-lesson3" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+                    <button onclick="switchTab('lesson3')" id="nav-lesson3" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all border border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100">
                         <div class="flex items-center space-x-3 truncate">
                             <i class="fa-solid fa-bullseye text-slate-500"></i>
                             <span class="truncate">3. Central Tendency</span>
@@ -122,7 +122,7 @@
                         <i class="fa-solid fa-chevron-right text-xs opacity-70"></i>
                     </button>
 
-                    <button onclick="switchTab('lesson4')" id="nav-lesson4" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+                    <button onclick="switchTab('lesson4')" id="nav-lesson4" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all border border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100">
                         <div class="flex items-center space-x-3 truncate">
                             <i class="fa-solid fa-arrows-left-right text-slate-500"></i>
                             <span class="truncate">4. Measures of Dispersion</span>
@@ -130,7 +130,7 @@
                         <i class="fa-solid fa-chevron-right text-xs opacity-70"></i>
                     </button>
 
-                    <button onclick="switchTab('lesson5')" id="nav-lesson5" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+                    <button onclick="switchTab('lesson5')" id="nav-lesson5" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all border border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100">
                         <div class="flex items-center space-x-3 truncate">
                             <i class="fa-solid fa-shuffle text-violet-500"></i>
                             <span class="truncate">5. Permutations & Combinations</span>
@@ -140,7 +140,7 @@
 
                     <div class="px-3 pt-4 mb-2 text-xs font-bold text-slate-400 uppercase tracking-wider">Interactive Tools</div>
 
-                    <button onclick="switchTab('calculators')" id="nav-calculators" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+                    <button onclick="switchTab('calculators')" id="nav-calculators" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all border border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100">
                         <div class="flex items-center space-x-3 truncate">
                             <i class="fa-solid fa-calculator text-amber-500"></i>
                             <span class="truncate">Interactive Lab & Tools</span>
@@ -148,7 +148,7 @@
                         <span class="bg-amber-100 text-amber-800 text-[10px] px-1.5 py-0.5 rounded font-semibold">Live</span>
                     </button>
 
-                    <button onclick="switchTab('quiz')" id="nav-quiz" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+                    <button onclick="switchTab('quiz')" id="nav-quiz" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all border border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100">
                         <div class="flex items-center space-x-3 truncate">
                             <i class="fa-solid fa-list-check text-emerald-500"></i>
                             <span class="truncate">Knowledge Practice Quiz</span>
@@ -158,13 +158,12 @@
                 </nav>
 
                 <!-- Helpful Quick Card -->
-                <div class="p-4 bg-slate-900 text-white rounded-2xl shadow-lg relative overflow-hidden">
-                    <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-brand-500/20 rounded-full blur-xl"></div>
+                <div id="studyTip" class="study-note">
                     <h4 class="font-semibold text-sm mb-1 flex items-center space-x-2">
-                        <i class="fa-solid fa-lightbulb text-amber-400"></i>
+                        <i class="fa-solid fa-lightbulb text-sky-600"></i>
                         <span>Study Tip</span>
                     </h4>
-                    <p class="text-xs text-slate-300 leading-relaxed">
+                    <p class="text-xs text-slate-700 leading-relaxed">
                         Pay special attention to the difference between <strong>Interval</strong> (arbitrary zero) and <strong>Ratio</strong> scales (absolute zero).
                     </p>
                 </div>
@@ -1066,6 +1065,13 @@
 
         </main>
     </div>
+
+    <!-- Footer -->
+    <footer class="py-6 flex items-center justify-center">
+        <span class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-slate-200 shadow-sm text-sm font-medium text-slate-600">
+            Created By Your Husband with Love&nbsp;<span class="text-red-500">&#10084;</span>
+        </span>
+    </footer>
 
     <script src="js/app.js"></script>
 </body>
