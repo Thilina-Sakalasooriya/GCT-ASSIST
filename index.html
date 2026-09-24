@@ -77,7 +77,6 @@
             background: rgba(202, 61, 53, 0.85);
             z-index: 5;
             pointer-events: none;
-            left-align: 120px;;
         }
 
         /* Mobile sidebar backdrop & scroll lock */
@@ -106,43 +105,20 @@
             header p.text-xs.text-slate-500.font-medium { display: none; }
         }
 
-        /* ===== Textbook Theme ===== */
-        .bg-white { background-color: #fbf7ec !important; }
-        .bg-slate-50 { background-color: #f3ecdc !important; }
-        .bg-slate-100 { background-color: #ece4d0 !important; }
-        .bg-slate-200 { background-color: #ded3b9 !important; }
-        .bg-slate-900 { background-color: #3a3124 !important; }
-        .text-slate-300 { color: #e2d9c3 !important; }
-        .text-slate-400 { color: #9a8c70 !important; }
-        .text-slate-500 { color: #7d715a !important; }
-        .text-slate-600 { color: #57503f !important; }
-        .text-slate-700 { color: #4c4534 !important; }
-        .text-slate-800 { color: #38321f !important; }
-        .text-slate-900 { color: #2e281a !important; }
-        .border-slate-100 { border-color: #e9dfc8 !important; }
-        .border-slate-200 { border-color: #dccfb2 !important; }
-        .border-slate-300 { border-color: #cbbda0 !important; }
-        .bg-brand-50 { background-color: #efe3d0 !important; }
-        .bg-brand-100 { background-color: #e3d0b8 !important; }
-        .bg-brand-600 { background-color: #7a3b2d !important; }
-        .text-brand-600 { color: #8a4433 !important; }
-        .text-brand-700 { color: #7a3b2d !important; }
-        .text-brand-800 { color: #5f2d22 !important; }
-        .hover\:bg-brand-700:hover { background-color: #5f2d22 !important; }
-        header {
-            background-color: #fbf7ec !important;
-            border-color: #cbbfa5 !important;
-            box-shadow: inset 0 -3px 0 #e8ddc8;
-        }
-        .rounded-2xl { border-radius: 0.5rem !important; }
-        .rounded-xl { border-radius: 0.375rem !important; }
-        .shadow-sm { box-shadow: 0 1px 2px rgba(96, 66, 26, 0.07) !important; }
-        .shadow-md { box-shadow: 0 2px 8px rgba(96, 66, 26, 0.10) !important; }
+        /* ===== Modern textbook typography ===== */
         h1, h2, h3, h4 {
-            font-family: 'Playfair Display', Georgia, 'Times New Roman', serif !important;
+            font-family: 'Poppins', 'Segoe UI', Arial, sans-serif !important;
+            font-weight: 600;
+            letter-spacing: -0.01em;
         }
         .font-sans {
-            font-family: Georgia, 'Times New Roman', 'Source Serif 4', serif !important;
+            font-family: 'Poppins', 'Segoe UI', Arial, sans-serif !important;
+        }
+        /* Modern header band */
+        header {
+            background-color: rgba(255, 255, 255, 0.92) !important;
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
         }
         /* GCT ASSIST Loading Page */
         #loadingPage {
