@@ -867,3 +867,53 @@ function trackCatEyes(e) {
     });
     setTimeout(hide, 5000);
 })();
+
+// =====================================================================
+// Progress log modal - reads PROGRESS.txt (works on GitHub Pages)
+// =====================================================================
+function openProgressLog() {
+    const modal = document.getElementById('progressModal');
+    const content = document.getElementById('progressLogContent');
+    if (!modal || !content) return;
+
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    modal.style.alignItems    = '';
+    modal.style.justifyContent = '';
+    modal.setAttribute('aria-hidden', 'false');
+
+    const fallback = [
+        'PROGRESS.txt could not be loaded.',
+        'This happens when opening the page from a plain file:// location.',
+        'Run a local server (e.g. npx serve) or deploy to GitHub Pages,',
+        'then open the page again - the log will appear here.',
+        '',
+        'You can also open it directly at:',
+        'PROGRESS.txt (same folder as index.html)'
+    ].join('\n');
+
+    content.textContent = 'Loading progress log...';
+    fetch('PROGRESS.txt')
+        .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.text(); })
+        .then(txt => { content.textContent = txt; })
+        .catch(() => { content.textContent = fallback; });
+}
+
+function closeProgressLog() {
+    const modal = document.getElementById('progressModal');
+    if (!modal) return;
+    modal.classList.remove('flex');
+    modal.classList.add('hidden');
+    modal.setAttribute('aria-hidden', 'true');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('progressModal');
+    const backdrop = document.getElementById('progressModalBackdrop');
+    if (modal && backdrop) {
+        backdrop.addEventListener('click', closeProgressLog);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeProgressLog();
+        });
+    }
+});
