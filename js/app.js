@@ -21,7 +21,110 @@ document.addEventListener("DOMContentLoaded", () => {
     // Randomise the Study Tip sticky note every minute
     rotateStudyTip();
     setInterval(rotateStudyTip, 60000);
+
+    // Search bar functionality
+    initSearch();
 });
+
+// ===== Search across lessons =====
+function initSearch() {
+    const input = document.getElementById('searchInput');
+    const wrap = input ? input.closest('.relative') : null;
+    if (!input || !wrap) return;
+
+    // Dropdown container under the search box
+    const dropdown = document.createElement('div');
+    dropdown.id = 'searchResults';
+    dropdown.className = 'hidden absolute top-full left-0 right-0 mt-2 z-50 bg-white border border-slate-200 rounded-xl shadow-lg overflow-hidden';
+    wrap.appendChild(dropdown);
+
+    input.addEventListener('input', () => {
+        const query = input.value.trim();
+        if (!query) { hideSearch(dropdown); return; }
+        renderSearchResults(query, dropdown);
+    });
+
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') { hideSearch(dropdown, input); }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!wrap.contains(e.target)) hideSearch(dropdown);
+    });
+}
+
+function searchableText(el) {
+    const clone = el.cloneNode(true);
+    clone.querySelectorAll('.hidden, [class*="hidden"]').forEach(n => n.remove());
+    return clone.textContent.replace(/\s+/g, ' ').trim();
+}
+
+function snippetAround(text, query, radius) {
+    const idx = text.toLowerCase().indexOf(query);
+    if (idx === -1) return '';
+    radius = radius || 60;
+    const start = Math.max(0, idx - radius);
+    const end = Math.min(text.length, idx + query.length + radius);
+    return (start > 0 ? '…' : '') + text.slice(start, end) + (end < text.length ? '…' : '');
+}
+
+function renderSearchResults(query, dropdown) {
+    const q = query.toLowerCase();
+    const results = [];
+
+    document.querySelectorAll('section.tab-content').forEach(sec => {
+        const titleEl = sec.querySelector('h2') || sec.querySelector('h3');
+        const title = titleEl ? titleEl.textContent.trim() : sec.id;
+        const text = searchableText(sec);
+        const idx = text.toLowerCase().indexOf(q);
+        if (idx === -1) return;
+        results.push({
+            id: sec.id,
+            title: title,
+            snippet: snippetAround(text, q, 50)
+        });
+    });
+
+    if (results.length === 0) {
+        dropdown.innerHTML = `
+            <div class="px-4 py-3 text-xs text-slate-500">
+                No results found for "<strong>${escapeHtml(query)}</strong>"
+            </div>`;
+        dropdown.classList.remove('hidden');
+        return;
+    }
+
+    dropdown.innerHTML = results.slice(0, 8).map(r => `
+        <button onclick="jumpToSearchResult('${r.id}')" class="w-full text-left px-4 py-2.5 hover:bg-brand-50 transition-colors border-b border-slate-100 last:border-0">
+            <div class="text-xs font-bold text-brand-700">${escapeHtml(r.title)}</div>
+            <div class="text-[11px] text-slate-500 truncate">${escapeHtml(r.snippet)}</div>
+        </button>
+    `).join('');
+
+    dropdown.classList.remove('hidden');
+}
+
+function jumpToSearchResult(id) {
+    const sec = document.getElementById(id);
+    if (!sec) return;
+    switchTab(id);
+    hideSearch(document.getElementById('searchResults'), document.getElementById('searchInput'));
+    setTimeout(() => {
+        const y = sec.getBoundingClientRect().top + window.pageYOffset - 88;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+        sec.classList.add('search-flash');
+        setTimeout(() => sec.classList.remove('search-flash'), 1600);
+    }, 60);
+}
+
+function escapeHtml(str) {
+    return (str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function hideSearch(dropdown, input) {
+    if (dropdown) dropdown.classList.add('hidden');
+    if (input) input.value = '';
+}
 
 // Study tip rotation
 const studyTips = [
