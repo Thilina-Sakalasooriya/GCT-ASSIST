@@ -1109,25 +1109,87 @@
     <!-- Animated cat mascot -->
     <div id="catMascot" aria-label="Cat mascot">
         <div class="cat-speech">hey your Husband loves you <i class="fa-solid fa-heart text-rose-500"></i></div>
-        <div class="cat" onclick="catSayHi()" title="Click me!">
-            <div class="tail"></div>
-            <div class="head">
-                <div class="ear left"></div>
-                <div class="ear right"></div>
-                <div class="face">
-                    <div class="stripe s1"></div>
-                    <div class="stripe s2"></div>
-                    <div class="stripe s3"></div>
-                    <div class="eye left"><div class="pupil"></div></div>
-                    <div class="eye right"><div class="pupil"></div></div>
-                    <div class="nose"></div>
-                    <div class="mouth"></div>
-                </div>
-            </div>
-            <div class="body">
-                <div class="paw left"></div>
-                <div class="paw right"></div>
-            </div>
+        <div class="cat" onclick="catSayHi()" title="Psst...">
+            <svg viewBox="0 0 260 170" xmlns="http://www.w3.org/2000/svg" width="260" height="170">
+                <defs>
+                    <linearGradient id="furGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stop-color="#c8cdd6"/>
+                        <stop offset="1" stop-color="#848b9c"/>
+                    </linearGradient>
+                    <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stop-color="#a7aec0"/>
+                        <stop offset="1" stop-color="#5c6373"/>
+                    </linearGradient>
+                    <radialGradient id="cheekGrad" cx="50%" cy="40%" r="60%">
+                        <stop offset="0" stop-color="#f4f6f9"/>
+                        <stop offset="1" stop-color="#c9cedb"/>
+                    </radialGradient>
+                    <radialGradient id="irisGrad" cx="40%" cy="35%" r="70%">
+                        <stop offset="0" stop-color="#fbbf24"/>
+                        <stop offset="1" stop-color="#92400e"/>
+                    </radialGradient>
+                </defs>
+
+                <!-- Body (extends off the screen to the right) -->
+                <g id="catBody">
+                    <path d="M96,118 C96,86 128,76 152,82 C200,90 232,96 246,116 C254,132 248,154 240,170 L102,170 C86,170 96,148 96,118 Z" fill="url(#bodyGrad)"/>
+                    <path d="M30,150 C55,142 80,138 108,140 C128,141 126,170 108,170 L38,170 C28,170 26,158 30,150 Z" fill="#eef0f4"/>
+                    <ellipse cx="170" cy="98" rx="26" ry="12" fill="#6b7280" transform="rotate(8 170 98)"/>
+                    <ellipse cx="200" cy="104" rx="24" ry="13" fill="#6b7280" transform="rotate(10 200 104)"/>
+                    <ellipse cx="228" cy="112" rx="20" ry="12" fill="#6b7280" transform="rotate(12 228 112)"/>
+                    <path d="M236,150 C250,140 262,138 268,148 C266,160 250,170 238,170 Z" fill="#7c8395"/>
+                </g>
+
+                <!-- Head -->
+                <g id="catHead">
+                    <!-- ears -->
+                    <path d="M36,66 L40,22 L80,52 Z" fill="url(#furGrad)" stroke="#6b7280" stroke-width="1.5"/>
+                    <path d="M45,55 L48,32 L72,50 Z" fill="#f9a8d4"/>
+                    <path d="M126,52 L148,34 L132,70 Z" fill="url(#furGrad)" stroke="#6b7280" stroke-width="1.5"/>
+                    <path d="M128,56 L141,42 L130,63 Z" fill="#f9a8d4"/>
+
+                    <!-- skull -->
+                    <ellipse cx="80" cy="94" rx="54" ry="49" fill="url(#furGrad)"/>
+                    <path d="M34,96 C34,64 58,48 80,48 C104,48 126,66 128,94 C128,120 106,138 80,138 C56,138 34,120 34,96 Z" fill="url(#furGrad)"/>
+
+                    <!-- forehead stripes (tabby M) -->
+                    <ellipse cx="68" cy="60" rx="11" ry="7" fill="#6b7280" transform="rotate(-18 68 60)"/>
+                    <ellipse cx="82" cy="55" rx="10" ry="7" fill="#6b7280"/>
+                    <ellipse cx="96" cy="61" rx="11" ry="7" fill="#6b7280" transform="rotate(18 96 61)"/>
+
+                    <!-- cheek ruffs -->
+                    <ellipse cx="48" cy="112" rx="20" ry="16" fill="url(#cheekGrad)"/>
+                    <ellipse cx="110" cy="114" rx="18" ry="15" fill="url(#cheekGrad)"/>
+
+                    <!-- eyes -->
+                    <g class="eye left">
+                        <path d="M38,90 C38,78 52,74 60,82 C60,90 54,100 44,100 C40,100 38,96 38,90 Z" fill="#fff"/>
+                        <circle cx="52" cy="88" r="11" fill="url(#irisGrad)"/>
+                        <ellipse class="pupil" cx="52" cy="88" rx="3.6" ry="6.5" fill="#1f2937"/>
+                        <circle cx="48" cy="84" r="2.6" fill="#fff"/>
+                    </g>
+                    <g class="eye right">
+                        <path d="M118,90 C118,78 130,74 138,82 C138,92 128,101 120,100 C116,100 118,94 118,90 Z" fill="#fff"/>
+                        <circle cx="128" cy="88" r="11" fill="url(#irisGrad)"/>
+                        <ellipse class="pupil" cx="128" cy="88" rx="3.6" ry="6.5" fill="#1f2937"/>
+                        <circle cx="124" cy="84" r="2.6" fill="#fff"/>
+                    </g>
+
+                    <!-- muzzle, nose, mouth -->
+                    <ellipse cx="80" cy="116" rx="20" ry="13" fill="url(#cheekGrad)"/>
+                    <path d="M72,104 C76,100 84,100 88,104 L80,113 Z" fill="#f472b6"/>
+                    <path d="M80,113 C76,117 71,119 66,117 C64,116 64,114 65,113" fill="none" stroke="#7f1d1d" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M80,113 C84,117 89,119 94,117 C96,116 96,114 95,113" fill="none" stroke="#7f1d1d" stroke-width="1.8" stroke-linecap="round"/>
+
+                    <!-- whiskers -->
+                    <g stroke="#9aa0b4" stroke-width="1.4" stroke-linecap="round" fill="none">
+                        <path d="M56,108 C40,102 22,100 8,102"/>
+                        <path d="M57,115 C40,116 22,119 7,122"/>
+                        <path d="M101,110 C116,106 132,106 146,110"/>
+                        <path d="M101,116 C114,120 130,124 142,130"/>
+                    </g>
+                </g>
+            </svg>
         </div>
     </div>
 
