@@ -109,10 +109,11 @@
                             </span>
                         </button>
                     </div>
-                    <div class="flex items-center space-x-2 bg-brand-50 text-brand-700 px-3 py-1.5 rounded-lg text-xs font-semibold">
+                    <button onclick="openProgressLog()" title="View the progress log (PROGRESS.txt)" class="flex items-center space-x-2 bg-brand-50 text-brand-700 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-brand-100 transition-colors cursor-pointer">
                         <i class="fa-solid fa-graduation-cap"></i>
                         <span id="progressPercentage">0% Completed</span>
-                    </div>
+                        <i class="fa-solid fa-book text-brand-400"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -1190,6 +1191,24 @@
                     </g>
                 </g>
             </svg>
+        </div>
+    </div>
+
+    <!-- Progress log modal (reads PROGRESS.txt) -->
+    <div id="progressModal" class="fixed inset-0 z-[9998] hidden items-end sm:items-center justify-center p-0 sm:p-6" aria-hidden="true">
+        <div id="progressModalBackdrop" class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"></div>
+        <div class="relative w-full sm:max-w-2xl max-h-[85vh] sm:max-h-[80vh] bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+            <div class="flex items-center justify-between px-5 py-4 border-b border-slate-200 bg-white">
+                <div class="flex items-center gap-2 text-slate-800">
+                    <i class="fa-solid fa-book text-brand-600"></i>
+                    <h2 class="font-bold text-sm sm:text-base">Progress Log</h2>
+                    <span class="text-slate-400 text-xs font-mono">PROGRESS.txt</span>
+                </div>
+                <button onclick="closeProgressLog()" aria-label="Close" class="w-9 h-9 rounded-lg flex items-center justify-center text-slate-500 hover:bg-slate-100 hover:text-slate-800 transition-colors cursor-pointer">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <pre id="progressLogContent" class="flex-1 overflow-y-auto p-5 text-xs sm:text-sm leading-relaxed whitespace-pre-wrap font-mono text-slate-700 bg-slate-50"></pre>
         </div>
     </div>
 
