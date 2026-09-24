@@ -24,7 +24,130 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Search bar functionality
     initSearch();
+
+    // Diary binding on the loading screen
+    buildDiaryBind();
+
+    // Restore saved night light state (no animation on load)
+    loadNightLightState();
+
+    // Night light button: cartoonish press-pop on release
+    const nightBtn = document.getElementById('nightLightBtn');
+    if (nightBtn) {
+        nightBtn.addEventListener('click', () => {
+            nightBtn.classList.remove('press-pop');
+            void nightBtn.offsetWidth;
+            nightBtn.classList.add('press-pop');
+        });
+        nightBtn.addEventListener('animationend', () => nightBtn.classList.remove('press-pop'));
+    }
+
+    // Focus button: press-pop + restore saved state
+    loadFocusState();
+    const focusBtn = document.getElementById('focusBtn');
+    if (focusBtn) {
+        focusBtn.addEventListener('click', () => {
+            focusBtn.classList.remove('press-pop');
+            void focusBtn.offsetWidth;
+            focusBtn.classList.add('press-pop');
+        });
+        focusBtn.addEventListener('animationend', () => focusBtn.classList.remove('press-pop'));
+    }
+
+    // Fade the sweep layer in while animating, out afterwards
+    const sweepEl = document.getElementById('nightLightSweep');
+    if (sweepEl) {
+        sweepEl.addEventListener('animationstart', () => { sweepEl.style.opacity = '1'; });
+        sweepEl.addEventListener('animationend', () => { sweepEl.style.opacity = '0'; });
+    }
+
+    // Cat mascot: random appearances + cursor-following eyes
+    scheduleCatShow();
+    armIdleCat();
+    ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart', 'click'].forEach(ev =>
+        document.addEventListener(ev, armIdleCat, { passive: true })
+    );
+    document.addEventListener('mousemove', trackCatEyes);
 });
+
+// ===== Focus mode =====
+const FOCUS_KEY = 'gct_focusMode';
+
+function loadFocusState() {
+    if (localStorage.getItem(FOCUS_KEY) === '1') {
+        document.body.classList.add('focus-mode');
+    }
+    updateFocusIcon();
+}
+
+function toggleFocusMode() {
+    const on = document.body.classList.toggle('focus-mode');
+    localStorage.setItem(FOCUS_KEY, on ? '1' : '0');
+    updateFocusIcon();
+    if (on) {
+        getCatMascot()?.classList.remove('cat-visible');
+    } else {
+        armIdleCat();
+    }
+}
+
+function updateFocusIcon() {
+    const icon = document.getElementById('focusBtnIcon');
+    if (!icon) return;
+    const on = document.body.classList.contains('focus-mode');
+    icon.className = on ? 'fa-solid fa-ban' : 'fa-solid fa-bullseye';
+    const btn = document.getElementById('focusBtn');
+    if (btn) btn.title = on ? 'Focus ON - the cat will not appear' : 'Focus Mode: hide the cat';
+}
+
+function isFocusMode() {
+    return document.body.classList.contains('focus-mode');
+}
+
+// ===== Night Light toggle =====
+const NIGHT_LIGHT_KEY = 'gct_nightLight';
+
+function loadNightLightState() {
+    if (localStorage.getItem(NIGHT_LIGHT_KEY) === '1') {
+        document.body.classList.add('night-light');
+    }
+    updateNightLightIcon();
+}
+
+function toggleNightLight(e) {
+    const on = document.body.classList.toggle('night-light');
+    localStorage.setItem(NIGHT_LIGHT_KEY, on ? '1' : '0');
+    updateNightLightIcon();
+
+    const x = e && typeof e.clientX === 'number' ? e.clientX : window.innerWidth / 2;
+    const y = e && typeof e.clientY === 'number' ? e.clientY : window.innerHeight / 2;
+    runNightLightSweep(on, x, y);
+}
+
+function updateNightLightIcon() {
+    const icon = document.getElementById('nightLightBtnIcon');
+    if (!icon) return;
+    const on = document.body.classList.contains('night-light');
+    icon.className = on ? 'fa-solid fa-moon text-lg' : 'fa-solid fa-sun text-lg';
+    const btn = document.getElementById('nightLightBtn');
+    if (btn) btn.title = on ? 'Turn off Night Light' : 'Turn on Night Light';
+}
+
+function runNightLightSweep(on, x, y) {
+    const sweep = document.getElementById('nightLightSweep');
+    if (!sweep) return;
+    const dot = sweep.querySelector('.night-light-dot');
+    if (!dot) return;
+
+    sweep.style.setProperty('--x', x + 'px');
+    sweep.style.setProperty('--y', y + 'px');
+
+    dot.style.animation = 'none';
+    void dot.offsetWidth;
+    dot.style.animation = on
+        ? 'nightSweepOn 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) forwards'
+        : 'nightSweepOff 0.9s ease-out forwards';
+}
 
 // ===== Search across lessons =====
 function initSearch() {
@@ -614,6 +737,120 @@ function updateProgress() {
 
     document.addEventListener('mouseleave', () => { last = null; });
 })();
+
+// Build the diary binding: punch holes + spiral coils
+function buildDiaryBind() {
+    const sides = [
+        ['punchHolesLeft', 'spiralCoilsLeft']
+    ];
+
+    sides.forEach(([holeId, coilId]) => {
+        const holesEl = document.getElementById(holeId);
+        const coilsEl = document.getElementById(coilId);
+        if (!holesEl || !coilsEl) return;
+
+        const count = 10;
+        const startY = 26;
+        const gap = 38;
+
+        for (let i = 0; i < count; i++) {
+            const y = startY + i * gap;
+
+            const hole = document.createElement('span');
+            hole.className = 'punch-hole';
+            hole.style.top = y + 'px';
+            holesEl.appendChild(hole);
+
+            const coil = document.createElement('span');
+            coil.className = 'spiral-coil' + (i % 2 ? ' alt' : '');
+            coil.style.top = (y - 9) + 'px';
+            coilsEl.appendChild(coil);
+        }
+    });
+}
+
+// ===== Cat mascot: hourly visits + idle study reminder =====
+const CAT_DEFAULT_MESSAGE = 'hey your Husband loves you <i class="fa-solid fa-heart text-rose-500"></i>';
+const CAT_IDLE_MESSAGE = "It's Time to Study My Love <i class=\"fa-solid fa-heart text-rose-500\"></i>";
+const IDLE_STUDY_MS = 10 * 60 * 1000;
+
+let idleCatTimer = null;
+
+function getCatMascot() {
+    return document.getElementById('catMascot');
+}
+
+function scheduleCatShow() {
+    // The cat visits once every hour (unless focus mode is on)
+    const delay = 60 * 60 * 1000;
+    setTimeout(() => {
+        if (document.hidden || isFocusMode()) {
+            scheduleCatShow();
+            return;
+        }
+        showCat(CAT_DEFAULT_MESSAGE, 4200);
+    }, delay);
+}
+
+function armIdleCat() {
+    clearTimeout(idleCatTimer);
+    idleCatTimer = setTimeout(() => {
+        if (document.hidden || isFocusMode()) return;
+        clearTimeout(showCat._t);
+        showCat(CAT_IDLE_MESSAGE, 7500);
+    }, IDLE_STUDY_MS);
+}
+
+function showCat(message, stayMs) {
+    const el = getCatMascot();
+    if (!el) return;
+    el.classList.add('cat-visible');
+    const bubble = el.querySelector('.cat-speech');
+    if (bubble) {
+        bubble.innerHTML = message || CAT_DEFAULT_MESSAGE;
+        bubble.classList.remove('bubble-pop');
+        void bubble.offsetWidth;
+        bubble.classList.add('bubble-pop');
+    }
+    if (stayMs) {
+        clearTimeout(showCat._t);
+        showCat._t = setTimeout(hideCat, stayMs);
+    }
+}
+
+function hideCat() {
+    const el = getCatMascot();
+    if (el) el.classList.remove('cat-visible');
+    clearTimeout(showCat._t);
+    scheduleCatShow();
+    armIdleCat();
+}
+
+function catSayHi() {
+    if (isFocusMode()) return;
+    clearTimeout(showCat._t);
+    clearTimeout(idleCatTimer);
+    showCat(CAT_DEFAULT_MESSAGE, 4200);
+    const cat = getCatMascot() ? getCatMascot().querySelector('.cat') : null;
+    if (cat) {
+        cat.classList.remove('cat-wiggle');
+        void cat.offsetWidth;
+        cat.classList.add('cat-wiggle');
+    }
+}
+
+function trackCatEyes(e) {
+    const el = getCatMascot();
+    if (!el || !el.classList.contains('cat-visible')) return;
+    const rect = el.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = Math.max(-5, Math.min(5, (e.clientX - cx) / 14));
+    const dy = Math.max(-4, Math.min(4, (e.clientY - cy) / 14));
+    el.querySelectorAll('.pupil').forEach(p => {
+        p.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
+    });
+}
 
 // GCT ASSIST Loading Page - hide once page is ready
 (function () {
