@@ -8,15 +8,58 @@ document.addEventListener("DOMContentLoaded", () => {
     calculateUserDataset();
     renderQuiz();
     updateProgress();
+
+    // Track mouse position on nav buttons for the border fade-in effect
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            btn.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+            btn.style.setProperty('--my', `${e.clientY - rect.top}px`);
+        });
+    });
+
+    // Randomise the Study Tip sticky note every minute
+    rotateStudyTip();
+    setInterval(rotateStudyTip, 60000);
 });
+
+// Study tip rotation
+const studyTips = [
+    'Pay special attention to the difference between <strong>Interval</strong> (arbitrary zero) and <strong>Ratio</strong> scales (absolute zero).',
+    'Always <strong>order your data</strong> before computing the median — it only works on sorted values.',
+    'The <strong>mode</strong> is the only measure of center you can use on categorical (nominal) data.',
+    'Range is simple but only uses two values; the <strong>standard deviation</strong> uses every value.',
+    'For the median position use <strong>(n + 1) &divide; 2</strong> — not n &divide; 2.',
+    'When counting arrangements, use <strong>combinations</strong> when order does not matter and <strong>permutations</strong> when it does.',
+    'A pie chart shows <strong>parts of a whole</strong>; use a bar chart when comparing separate categories.',
+    'Outliers can pull the mean away — report the <strong>median</strong> and <strong>IQR</strong> when your data is skewed.',
+    'The lower the standard deviation, the more <strong>consistent</strong> your dataset is.',
+    'Use the interactive lab to experiment — <strong>numbers are easier to understand when you see them change</strong>.'
+];
+
+let lastStudyTipIndex = -1;
+
+function rotateStudyTip() {
+    const note = document.getElementById('studyTip');
+    if (!note) return;
+    let index = Math.floor(Math.random() * studyTips.length);
+    while (index === lastStudyTipIndex) index = Math.floor(Math.random() * studyTips.length);
+    lastStudyTipIndex = index;
+    const p = note.querySelector('p');
+    if (!p) return;
+    p.classList.remove('tip-fade');
+    void p.offsetWidth;
+    p.innerHTML = studyTips[index];
+    p.classList.add('tip-fade');
+}
 
 // Tab Navigation Switcher
 function switchTab(tabId) {
     activeTab = tabId;
     document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
     document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.classList.remove('bg-brand-50', 'text-brand-700', 'shadow-sm');
-        btn.classList.add('text-slate-600');
+        btn.classList.remove('border-black', 'bg-white', 'text-slate-900', 'shadow-sm');
+        btn.classList.add('border-transparent', 'text-slate-600');
     });
 
     const currentTab = document.getElementById(tabId);
@@ -24,8 +67,8 @@ function switchTab(tabId) {
 
     if (currentTab) currentTab.classList.remove('hidden');
     if (currentNav) {
-        currentNav.classList.add('bg-brand-50', 'text-brand-700', 'shadow-sm');
-        currentNav.classList.remove('text-slate-600');
+        currentNav.classList.add('border-black', 'bg-white', 'text-slate-900', 'shadow-sm');
+        currentNav.classList.remove('border-transparent', 'text-slate-600');
     }
 
     // Close mobile sidebar if open
