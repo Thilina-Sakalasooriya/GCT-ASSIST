@@ -201,6 +201,14 @@
                         <i class="fa-solid fa-chevron-right text-xs opacity-70"></i>
                     </button>
 
+                    <button onclick="switchTab('lesson5')" id="nav-lesson5" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+                        <div class="flex items-center space-x-3 truncate">
+                            <i class="fa-solid fa-shuffle text-violet-500"></i>
+                            <span class="truncate">5. Permutations & Combinations</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-xs opacity-70"></i>
+                    </button>
+
                     <div class="px-3 pt-4 mb-2 text-xs font-bold text-slate-400 uppercase tracking-wider">Interactive Tools</div>
 
                     <button onclick="switchTab('calculators')" id="nav-calculators" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100">
@@ -818,6 +826,207 @@
                 </div>
             </section>
 
+            <!-- LESSON 5 CONTENT -->
+            <section id="lesson5" class="tab-content space-y-6 hidden">
+                <!-- Lesson Header -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-violet-50 rounded-bl-full -z-0"></div>
+                    <div class="relative z-10">
+                        <div class="inline-flex items-center space-x-2 text-xs font-semibold bg-violet-100 text-violet-800 px-2.5 py-1 rounded-md mb-3">
+                            <span>Module 5</span>
+                            <span>•</span>
+                            <span>Counting Principles</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                            Permutations &amp; Combinations
+                        </h2>
+                        <p class="mt-2 text-slate-600 text-sm sm:text-base leading-relaxed max-w-3xl">
+                            Master the art of counting possibilities without listing them. Learn the Fundamental Counting Principle, and distinguish when order matters (Permutations) versus when it does not (Combinations).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Theory Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Fundamental Counting Principle -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="text-lg font-bold text-slate-900 mb-2 flex items-center space-x-2">
+                            <i class="fa-solid fa-list-ol text-violet-500"></i>
+                            <span>1. Fundamental Counting Principle</span>
+                        </h3>
+                        <p class="text-sm text-slate-600 leading-relaxed mb-3">
+                            If one task can be performed in <strong>m</strong> ways and a second independent task can be performed in <strong>n</strong> ways, then together they can be performed in <strong>m × n</strong> ways.
+                        </p>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-700 space-y-1">
+                            <p><strong>Example:</strong> Choosing a meal with 3 appetizers and 4 main courses gives 3 × 4 = 12 possible meals.</p>
+                        </div>
+                    </div>
+
+                    <!-- Factorials -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="text-lg font-bold text-slate-900 mb-2 flex items-center space-x-2">
+                            <i class="fa-solid fa-exclamation text-violet-500"></i>
+                            <span>2. Factorial Notation (n!)</span>
+                        </h3>
+                        <p class="text-sm text-slate-600 leading-relaxed mb-3">
+                            The product of all positive integers from 1 up to n. It is the building block for every counting formula.
+                        </p>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-700 space-y-1">
+                            <p class="font-mono">5! = 5 × 4 × 3 × 2 × 1 = 120</p>
+                            <p class="font-mono">n! = n × (n − 1) × (n − 2) … × 1</p>
+                            <p class="text-slate-500"><em>Convention: 0! = 1 (so formulas work with empty arrangements).</em></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Formulas Grid -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                    <h3 class="text-xl font-bold text-slate-900 border-b border-slate-100 pb-3">
+                        Permutations vs Combinations
+                    </h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Permutation -->
+                        <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2">
+                            <h4 class="font-bold text-slate-900 text-base">Permutation (Order Matters)</h4>
+                            <p class="text-xs text-slate-600">Arrangements where the sequence of selection is meaningful (e.g., rankings, codes, seating).</p>
+                            <div class="p-2 bg-white rounded border border-slate-200 font-mono text-xs text-center text-slate-800">
+                                P(n, r) = n! / (n − r)!
+                            </div>
+                            <p class="text-[11px] text-slate-500">Selecting r items from n, in order.</p>
+                        </div>
+
+                        <!-- Permutation with Repetition -->
+                        <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2">
+                            <h4 class="font-bold text-slate-900 text-base">Permutation with Repetition</h4>
+                            <p class="text-xs text-slate-600">Arranging n objects where some are identical (e.g., letters of a word).</p>
+                            <div class="p-2 bg-white rounded border border-slate-200 font-mono text-xs text-center text-slate-800">
+                                n! / (n₁! n₂! … nₖ!)
+                            </div>
+                            <p class="text-[11px] text-slate-500">Divide out the repeated identical items.</p>
+                        </div>
+
+                        <!-- Combination -->
+                        <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2">
+                            <h4 class="font-bold text-slate-900 text-base">Combination (Order Doesn't Matter)</h4>
+                            <p class="text-xs text-slate-600">Selections where arrangement is irrelevant (e.g., committees, choosing teams).</p>
+                            <div class="p-2 bg-white rounded border border-slate-200 font-mono text-xs text-center text-slate-800">
+                                C(n, r) = n! / (r! (n − r)!)
+                            </div>
+                            <p class="text-[11px] text-slate-500">Property: C(n, r) = C(n, n − r).</p>
+                        </div>
+                    </div>
+
+                    <!-- Comparison Table -->
+                    <div class="overflow-x-auto border border-slate-200 rounded-xl">
+                        <table class="w-full text-xs sm:text-sm">
+                            <thead>
+                                <tr class="bg-slate-100 text-slate-700">
+                                    <th class="text-left px-4 py-3 font-bold">Feature</th>
+                                    <th class="text-left px-4 py-3 font-bold">Permutation</th>
+                                    <th class="text-left px-4 py-3 font-bold">Combination</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 text-slate-600">
+                                <tr>
+                                    <td class="px-4 py-3 font-medium text-slate-800">Key Question</td>
+                                    <td class="px-4 py-3">How many arrangements?</td>
+                                    <td class="px-4 py-3">How many selections?</td>
+                                </tr>
+                                <tr class="bg-slate-50/50">
+                                    <td class="px-4 py-3 font-medium text-slate-800">Does order matter?</td>
+                                    <td class="px-4 py-3 text-emerald-600 font-semibold">Yes</td>
+                                    <td class="px-4 py-3 text-red-500 font-semibold">No</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 font-medium text-slate-800">Example</td>
+                                    <td class="px-4 py-3">Order of finishers in a race</td>
+                                    <td class="px-4 py-3">Members of a committee</td>
+                                </tr>
+                                <tr class="bg-slate-50/50">
+                                    <td class="px-4 py-3 font-medium text-slate-800">Relation</td>
+                                    <td class="px-4 py-3" colspan="2" class="font-mono">P(n, r) = C(n, r) × r! &nbsp; (every selection can be ordered r! ways)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Practice Exercises -->
+                <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                    <h3 class="text-xl font-bold text-slate-900 border-b border-slate-100 pb-3 flex items-center space-x-2">
+                        <i class="fa-solid fa-pen-to-square text-brand-600"></i>
+                        <span>Lesson 5 Practice Exercises</span>
+                    </h3>
+
+                    <!-- Question 5.1 -->
+                    <div class="border border-slate-200 rounded-xl p-5 bg-slate-50/30 space-y-3">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-bold uppercase tracking-wider text-brand-600 bg-brand-50 px-2 py-0.5 rounded">Exercise 5.1</span>
+                            <span class="text-xs text-slate-400">Permutation</span>
+                        </div>
+                        <p class="text-sm font-medium text-slate-800">
+                            How many different 4-letter codes can be formed from the letters A, B, C, D, E, F using each letter at most once?
+                        </p>
+                        <button onclick="toggleAnswer('ans-5-1')" class="text-xs font-semibold text-brand-600 hover:text-brand-800 flex items-center space-x-1 focus:outline-none">
+                            <span>Show Solution & Explanation</span>
+                            <i id="icon-ans-5-1" class="fa-solid fa-chevron-down text-[10px] transition-transform"></i>
+                        </button>
+                        <div id="ans-5-1" class="hidden mt-3 p-4 bg-emerald-50 border border-emerald-200 rounded-lg text-xs text-emerald-900 space-y-2">
+                            <ul class="list-disc pl-5 space-y-1 text-slate-700">
+                                <li>Order of letters matters (GCT is different from CTG), so use a <strong>Permutation</strong>.</li>
+                                <li><span class="font-mono">P(6, 4) = 6! / (6 − 4)! = 6! / 2! = 720 / 2 = 360</span></li>
+                            </ul>
+                            <p class="text-slate-800 font-semibold">Answer: <strong>360</strong> different codes.</p>
+                        </div>
+                    </div>
+
+                    <!-- Question 5.2 -->
+                    <div class="border border-slate-200 rounded-xl p-5 bg-slate-50/30 space-y-3">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-bold uppercase tracking-wider text-brand-600 bg-brand-50 px-2 py-0.5 rounded">Exercise 5.2</span>
+                            <span class="text-xs text-slate-400">Combination</span>
+                        </div>
+                        <p class="text-sm font-medium text-slate-800">
+                            A committee of 3 members is to be chosen from a class of 7 students. How many different committees are possible?
+                        </p>
+                        <button onclick="toggleAnswer('ans-5-2')" class="text-xs font-semibold text-brand-600 hover:text-brand-800 flex items-center space-x-1 focus:outline-none">
+                            <span>Show Solution & Explanation</span>
+                            <i id="icon-ans-5-2" class="fa-solid fa-chevron-down text-[10px] transition-transform"></i>
+                        </button>
+                        <div id="ans-5-2" class="hidden mt-3 p-4 bg-emerald-50 border border-emerald-200 rounded-lg text-xs text-emerald-900 space-y-2">
+                            <ul class="list-disc pl-5 space-y-1 text-slate-700">
+                                <li>Members are not ranked, so the order of selection is irrelevant → use a <strong>Combination</strong>.</li>
+                                <li><span class="font-mono">C(7, 3) = 7! / (3! × 4!) = (7 × 6 × 5) / (3 × 2 × 1) = 210 / 6 = 35</span></li>
+                            </ul>
+                            <p class="text-slate-800 font-semibold">Answer: <strong>35</strong> possible committees.</p>
+                        </div>
+                    </div>
+
+                    <!-- Question 5.3 -->
+                    <div class="border border-slate-200 rounded-xl p-5 bg-slate-50/30 space-y-3">
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-bold uppercase tracking-wider text-brand-600 bg-brand-50 px-2 py-0.5 rounded">Exercise 5.3</span>
+                            <span class="text-xs text-slate-400">Permutation with Repetition</span>
+                        </div>
+                        <p class="text-sm font-medium text-slate-800">
+                            How many distinct arrangements can be made from all the letters of the word <span class="font-mono">MISSISSIPPI</span>?
+                        </p>
+                        <button onclick="toggleAnswer('ans-5-3')" class="text-xs font-semibold text-brand-600 hover:text-brand-800 flex items-center space-x-1 focus:outline-none">
+                            <span>Show Solution & Explanation</span>
+                            <i id="icon-ans-5-3" class="fa-solid fa-chevron-down text-[10px] transition-transform"></i>
+                        </button>
+                        <div id="ans-5-3" class="hidden mt-3 p-4 bg-emerald-50 border border-emerald-200 rounded-lg text-xs text-emerald-900 space-y-2">
+                            <ul class="list-disc pl-5 space-y-1 text-slate-700">
+                                <li>MISSISSIPPI has 11 letters: M ×1, I ×4, S ×4, P ×2.</li>
+                                <li><span class="font-mono">11! / (1! × 4! × 4! × 2!) = 39,916,800 / 1,152 = 34,650</span></li>
+                            </ul>
+                            <p class="text-slate-800 font-semibold">Answer: <strong>34,650</strong> distinct arrangements.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- CALCULATORS / INTERACTIVE LAB CONTENT -->
             <section id="calculators" class="tab-content space-y-6 hidden">
                 <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
@@ -916,7 +1125,7 @@
                         Interactive Knowledge Check
                     </h2>
                     <p class="mt-2 text-slate-600 text-sm">
-                        Test your mastery across all four course modules with immediate feedback.
+                        Test your mastery across all five course modules with immediate feedback.
                     </p>
                 </div>
 
