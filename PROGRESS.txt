@@ -1,0 +1,76 @@
+GCT ASSIST - PROJECT PROGRESS LOG
+==================================
+Author: The Husband who loves you very much
+Repo: Thilina-Sakalasooriya/GCT-ASSIST
+Platform: GitHub Pages (static site, no backend needed)
+
+------------------------------------------------------------
+ FEATURES BUILT SO FAR
+------------------------------------------------------------
+
+[1] Pencil Cursor
+    - Custom pencil cursor that points up, tilted -30 degrees.
+    - Hotspot tuned so the tip of the pencil is the click point.
+
+[2] Square-Ruled Notebook Background
+    - Whole app sits on a light square-ruled grid (like real paper)
+      and the LOADING SCREEN matches the same white ruled style.
+
+[3] Loading Screen - Diary Cover
+    - A floating diary cover with brownish-red leather texture.
+    - Gold spiral coils + punch holes on the LEFT side (removed right side).
+    - Spinner + "By Your Husband with Love" message.
+    - Fades away smoothly once the page is ready.
+
+[4] Global Search
+    - Search bar in the header with live dropdown results.
+    - Jumps to the matching lesson/section.
+    - Highlights the found text with a flash animation.
+
+[5] Animated Cat Mascot (REALISTIC SVG CAT)
+    - Real cat SVG (fur texture, amber eyes, whiskers, claws).
+    - Appears from the right corner to say hi every hour:
+      "hey your Husband loves you <3"
+    - If you stay idle 10 minutes, it reminds you to study:
+      "It's Time to Study My Love <3"
+    - Cat's eyes follow your mouse.
+    - Click the cat to make it say hi anytime.
+
+[6] Focus Mode Button (emerald physical button)
+    - Press to disable the cat interruptions and study in quiet.
+    - Same squishy physical-button feel as the night light.
+
+[7] Night Light Button (amber physical button)
+    - Warm orange screen tint for night time.
+    - Full-screen light sweep animation when toggled.
+    - Golden glow on the button in dark mode.
+    - Remembers your choice between visits (saved in localStorage).
+
+[8] Cursor Trail
+    - Dashed pencil-like trail follows the mouse around the page,
+      drawn behind the content on a canvas.
+
+[9] Interactivity / Polish
+    - Active nav highlighting (button jiggles as you hover via
+      mouse-position glow effect).
+    - Tabs (Lesson 1-5, Scales, Calculators, Quiz, Review) switch
+      without reloading the page.
+    - Progress percentage updates as you complete topic sections.
+    - Fireworks when you score a perfect quiz.
+
+------------------------------------------------------------
+ NOTES
+------------------------------------------------------------
+- Everything saved to browser (night light / focus mode) uses
+  localStorage, so it survives page refreshes within the browser.
+- No backend or database required; works 100% with GitHub Pages.
+- Static files served by GitHub Pages: just push to main branch
+  and the site updates automatically.
+
+------------------------------------------------------------
+ WHATS NEXT / IDEAS
+------------------------------------------------------------
+- Responsive + smooth tweaks for small phone screens.
+- More realistic cat animations / cat sounds.
+- More quiz questions per lesson.
+- Dark theme option for the whole app.
