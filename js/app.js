@@ -84,9 +84,12 @@ function toggleFocusMode() {
     const on = document.body.classList.toggle('focus-mode');
     localStorage.setItem(FOCUS_KEY, on ? '1' : '0');
     updateFocusIcon();
+
     if (on) {
-        showCat(CAT_IDLE_MESSAGE, 6000);
+        clearTimeout(idleCatTimer);
+        showCat("You can Do it honey, be focused <i class=\"fa-solid fa-heart text-rose-500\"></i>", 4000);
     } else {
+        showCat("meow... Well done <i class=\"fa-solid fa-heart text-rose-500\"></i>", 4000);
         armIdleCat();
     }
 }
