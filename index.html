@@ -100,6 +100,7 @@
         }
         @media (max-width: 767.98px) {
             body.sidebar-open { overflow: hidden; }
+            body::before { display: none; }
         }
         @media (max-width: 430px) {
             header p.text-xs.text-slate-500.font-medium { display: none; }
@@ -130,8 +131,8 @@
             align-items: center;
             justify-content: center;
             gap: 18px;
-            background: #33291c;
-            color: #fbf7ec;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: #fff;
             transition: opacity 0.4s ease, visibility 0.4s ease;
         }
         #loadingPage.loaded {
@@ -142,29 +143,28 @@
         #loadingPage .logo {
             width: 56px;
             height: 56px;
-            border-radius: 12px;
-            background: #7a3b2d;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Playfair Display', Georgia, serif;
+            font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
             font-weight: 800;
             font-size: 24px;
             letter-spacing: 0.5px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-            border: 1px solid #c9a86a;
+            box-shadow: 0 8px 24px rgba(79, 70, 229, 0.4);
         }
         #loadingPage .title {
-            font-family: 'Playfair Display', Georgia, serif;
+            font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
             font-size: 22px;
-            font-weight: 700;
-            letter-spacing: 4px;
+            font-weight: 600;
+            letter-spacing: 3px;
         }
         #loadingPage .spinner {
             width: 34px;
             height: 34px;
-            border: 3px solid rgba(251, 247, 236, 0.15);
-            border-top-color: #c9a86a;
+            border: 3px solid rgba(255, 255, 255, 0.15);
+            border-top-color: #818cf8;
             border-radius: 50%;
             animation: gctSpin 0.8s linear infinite;
         }
