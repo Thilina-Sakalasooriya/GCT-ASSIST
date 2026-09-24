@@ -85,7 +85,7 @@ function toggleFocusMode() {
     localStorage.setItem(FOCUS_KEY, on ? '1' : '0');
     updateFocusIcon();
     if (on) {
-        getCatMascot()?.classList.remove('cat-visible');
+        showCat(CAT_IDLE_MESSAGE, 6000);
     } else {
         armIdleCat();
     }
