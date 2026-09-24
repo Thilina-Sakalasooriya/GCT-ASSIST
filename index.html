@@ -56,14 +56,14 @@
             font-style: italic;
         }
 
-        /* Square-ruled notebook grid on cream textbook paper */
+        /* Cream textbook paper + warm square grid */
         body {
-            background-color: #f6f0e3;
+            background-color: #f6f1e6;
             background-image:
-                linear-gradient(to right, rgba(139, 104, 66, 0.18) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(139, 104, 66, 0.18) 1px, transparent 1px);
+                linear-gradient(to right, rgba(142, 110, 74, 0.14) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(142, 110, 74, 0.14) 1px, transparent 1px);
             background-size: 24px 24px;
-            font-family: Georgia, 'Times New Roman', 'Source Serif 4', serif !important;
+            font-family: 'Poppins', 'Segoe UI', Arial, sans-serif !important;
         }
 
         /* Red margin line like a real book page */
@@ -72,11 +72,12 @@
             position: fixed;
             top: 0;
             bottom: 0;
-            left: 120px;
+            left: 12px;
             width: 2.5px;
             background: rgba(202, 61, 53, 0.85);
             z-index: 5;
             pointer-events: none;
+            left-align: 120px;;
         }
 
         /* Mobile sidebar backdrop & scroll lock */
