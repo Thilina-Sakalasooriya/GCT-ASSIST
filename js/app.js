@@ -464,6 +464,54 @@ function updateProgress() {
     document.getElementById('progressPercentage').innerText = `${pct}% Progress`;
 }
 
+// ===== Dashed cursor trace on the background =====
+(function () {
+    const canvas = document.createElement('canvas');
+    canvas.id = 'cursorTrace';
+    canvas.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:-1;';
+    const ctx = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+
+    function resize() {
+        canvas.width = Math.floor(window.innerWidth * dpr);
+        canvas.height = Math.floor(window.innerHeight * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+    document.body.appendChild(canvas);
+
+    let last = null;
+
+    function step() {
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.03)';
+        ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+        ctx.globalCompositeOperation = 'source-over';
+        requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+
+    window.addEventListener('mousemove', (e) => {
+        const x = e.clientX;
+        const y = e.clientY;
+        if (last !== null) {
+            ctx.strokeStyle = 'rgba(71, 85, 105, 0.6)';
+            ctx.lineWidth = 1.5;
+            ctx.lineCap = 'round';
+            ctx.setLineDash([6, 5]);
+            ctx.beginPath();
+            ctx.moveTo(last.x, last.y);
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+        last = { x, y };
+    });
+
+    document.addEventListener('mouseleave', () => { last = null; });
+})();
+
 // GCT ASSIST Loading Page - hide once page is ready
 (function () {
     var start = Date.now();
