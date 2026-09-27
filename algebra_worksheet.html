@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algebra Worksheet · Questions Only</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --brand: #0d9488;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+            color: #1f2937;
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 10mm 12mm;
+        }
+
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
+            height: 297mm;
+            padding: 12mm 14mm;
+            margin: 16px auto;
+            background: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            page-break-after: always;
+            break-after: page;
+            overflow: hidden;
+        }
+
+        /* Question card */
+        .q-card {
+            border: 1px solid #e2e8f0;
+            border-left: 3px solid #cbd5e1;
+            border-radius: 8px;
+            background: #ffffff;
+            padding: 7px 9px 8px 9px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .q-card:hover {
+            border-color: #94a3b8;
+        }
+
+        /* Answer key cards */
+        .ak-card {
+            border: 1px solid #d1fae5;
+            background: #f0fdf4;
+        }
+
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            .a4-page {
+                box-shadow: none;
+                margin: 0;
+                width: 100%;
+                height: 100vh;
+                padding: 0;
+                page-break-after: always;
+                break-after: page;
+            }
+
+            body.print-questions-only .answer-key-page {
+                display: none !important;
+            }
+
+            body.print-key-only .exam-page {
+                display: none !important;
+            }
+        }
+
+        /* Scrollbars */
+        .drawer-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .drawer-scroll::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 8px;
+        }
+
+        .drawer-scroll::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===================== TOOLBAR ===================== -->
+    <header class="no-print fixed top-0 left-0 right-0 bg-slate-900 text-white z-40 shadow-lg border-b border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+                <a href="index.html" title="Back to GCT Module"
+                   class="bg-slate-800 hover:bg-slate-700 p-2 rounded-lg border border-slate-700 transition shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </a>
+                <div class="bg-teal-600 p-2 rounded-lg shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <div class="min-w-0">
+                    <h1 class="font-bold text-base sm:text-lg leading-tight truncate">Algebra Worksheet — Questions Only</h1>
+                    <p class="text-[11px] text-slate-400">
+                        <span id="barSetLabel">Set —</span>
+                        · <span id="barPageInfo">0 pages</span>
+                        · <span id="barAdminState">student view</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2 flex-wrap">
+                <button onclick="sendWhatsApp()"
+                        class="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-3 py-2 rounded-lg shadow transition">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 448 512">
+                        <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 110.9L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.4 4.2-12.6 1.4-32.6-14.8-54-31.5-72.6-74.1-5.7-12.7 5.7-12 8.3-16.2 1.7-2.7 2.6-5.9 3.8-9.1 1.3-3.7.7-6.9-.5-9.7-1.2-2.8-12.5-29.6-17.1-40.6-4.5-11-9-9.4-12.4-9.6h-10.5c-3.5 0-9.2 1.3-14 6-4.8 4.8-18.4 18-18.4 43.9s18.9 50.9 21.5 54.3c2.6 3.4 37.1 56.6 89.8 79.4 12.5 5.4 22.2 8.5 29.8 10.9 12.6 4 24 3.4 33 2.1 10.3-1.5 32.2-13.2 36.7-25.9 4.5-12.8 4.5-23.6 3.1-25.9-1.4-2.2-5-3.4-10.5-6.2z" />
+                    </svg>
+                    Send on WhatsApp
+                </button>
+
+                <div class="relative group">
+                    <button class="flex items-center gap-2 bg-teal-600 hover:bg-teal-500 text-white text-xs font-semibold px-4 py-2 rounded-lg shadow transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+                        </svg>
+                        Print / PDF
+                    </button>
+                    <div
+                        class="absolute right-0 mt-1 w-56 bg-slate-800 rounded-lg shadow-xl border border-slate-700 py-1 hidden group-hover:block z-50">
+                        <button onclick="triggerPrint('questions')"
+                            class="w-full text-left px-4 py-2 text-xs text-slate-200 hover:bg-slate-700">Print Questions Only</button>
+                        <button id="printKeyBtn" onclick="triggerPrint('key')"
+                            class="w-full text-left px-4 py-2 text-xs text-slate-200 hover:bg-slate-700">Print Answer Key (Admin)</button>
+                        <button onclick="triggerPrint('all')"
+                            class="w-full text-left px-4 py-2 text-xs text-slate-200 hover:bg-slate-700">Print Everything</button>
+                    </div>
+                </div>
+
+                <button id="btnAdmin" onclick="toggleAdminDrawer()" class="hidden items-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-900 text-xs font-bold px-3 py-2 rounded-lg shadow transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15.75 3a2.25 2.25 0 013 3m-3-3v18m0-13.5h4.5a1.5 1.5 0 011.5 1.5v1.5a1.5 1.5 0 01-1.5 1.5H15.75m-3 0H8.25a1.5 1.5 0 01-1.5-1.5v-1.5a1.5 1.5 0 011.5-1.5h4.5m-6 0V21m0-3h6"></path>
+                    </svg>
+                    Admin
+                </button>
+            </div>
+        </div>
+
+        <!-- Student instruction strip -->
+        <div class="max-w-7xl mx-auto px-4 pb-3">
+            <div class="bg-slate-800/80 border border-slate-700 rounded-lg px-3 py-2 flex items-start gap-2.5 text-[11px] text-slate-300">
+                <svg class="w-4 h-4 text-teal-400 shrink-0 mt-px" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <p class="leading-relaxed">
+                    <strong class="text-white">How to submit:</strong> do every question in your own notebook (there is no answer
+                    space printed here). Then take <strong class="text-white">clear photos</strong> of your written work and send
+                    them to your teacher on WhatsApp using the green button above. Write your
+                    <strong class="text-white">name and set code</strong> on your first page.
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Printable sheets -->
+    <main id="worksheetContainer" class="pt-40 pb-12"></main>
+
+    <!-- ===================== ADMIN DRAWER ===================== -->
+    <div id="adminBackdrop" class="no-print hidden fixed inset-0 bg-slate-900/60 z-40 backdrop-blur-sm"></div>
+
+    <aside id="adminDrawer"
+        class="no-print hidden fixed top-0 right-0 h-full w-full sm:w-[440px] bg-slate-900 text-slate-200 z-50 border-l border-slate-700 shadow-2xl flex flex-col">
+        <!-- Drawer head -->
+        <div class="px-5 py-4 border-b border-slate-700 bg-slate-800/60 flex items-center justify-between gap-3 shrink-0">
+            <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-9 h-9 rounded-lg bg-amber-500 text-slate-900 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <div class="min-w-0">
+                    <h2 class="font-bold text-sm text-white truncate">Admin Answer Control</h2>
+                    <p class="text-[10px] text-amber-300/80 truncate">Editing &amp; randomising</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+                <button onclick="lockAdmin()" title="Lock admin mode"
+                    class="px-2.5 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 text-[11px] font-semibold border border-slate-600 transition">
+                    Lock
+                </button>
+                <button onclick="toggleAdminDrawer()" title="Close panel"
+                    class="w-8 h-8 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Drawer body -->
+        <div class="drawer-scroll flex-1 overflow-y-auto px-5 py-4 space-y-5">
+
+            <!-- Section: set controls -->
+            <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-4 space-y-3">
+                <h3 class="text-[11px] font-bold text-amber-300 uppercase tracking-wider flex items-center gap-1.5">
+                    <i class="fa-solid fa-sliders"></i> Worksheet Settings
+                </h3>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <label class="block">
+                        <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">Questions / Page</span>
+                        <select id="cfgPerPage" onchange="updateConfig()"
+                            class="mt-1 w-full bg-slate-900 border border-slate-700 text-slate-100 text-xs font-semibold rounded-lg px-2.5 py-2 focus:border-amber-500 focus:outline-none">
+                            <option value="6">6</option>
+                            <option value="9">9</option>
+                            <option value="12">12</option>
+                            <option value="15">15</option>
+                        </select>
+                    </label>
+                    <label class="block">
+                        <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">Total Pages</span>
+                        <select id="cfgPages" onchange="updateConfig()"
+                            class="mt-1 w-full bg-slate-900 border border-slate-700 text-slate-100 text-xs font-semibold rounded-lg px-2.5 py-2 focus:border-amber-500 focus:outline-none">
+                            <option value="3">3</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                        </select>
+                    </label>
+                </div>
+
+                <label class="block">
+                    <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">Teacher WhatsApp Number <span
+                            class="text-slate-500 normal-case font-normal">(with country code, no +)</span></span>
+                    <input id="cfgWa" type="text" inputmode="numeric" placeholder="639XXXXXXXXX" onblur="saveWaNumber()"
+                        class="mt-1 w-full bg-slate-900 border border-slate-700 text-slate-100 text-xs rounded-lg px-3 py-2 focus:border-amber-500 focus:outline-none placeholder:text-slate-600">
+                </label>
+
+                <button onclick="randomiseAll()"
+                    class="w-full py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-900 text-xs font-bold rounded-lg transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-shuffle"></i> Randomise Everything (New Set)
+                </button>
+            </div>
+
+            <!-- Section: visibility -->
+            <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-4 space-y-3">
+                <h3 class="text-[11px] font-bold text-amber-300 uppercase tracking-wider flex items-center gap-1.5">
+                    <i class="fa-solid fa-eye"></i> Student Visibility
+                </h3>
+                <label class="flex items-start gap-3 cursor-pointer">
+                    <input id="cfgShowAnswers" type="checkbox" onchange="toggleShowAnswers(this.checked)"
+                        class="mt-0.5 w-4 h-4 accent-amber-500">
+                    <span class="text-[11px] leading-relaxed text-slate-300">
+                        <strong class="text-white">Show answer pages to students</strong><br>
+                        Appends the answer key pages after the questions. Leave <em>off</em> so students only see questions.
+                    </span>
+                </label>
+                <label class="flex items-start gap-3 cursor-pointer">
+                    <input id="cfgShowSet" type="checkbox" onchange="toggleShowSet(this.checked)"
+                        class="mt-0.5 w-4 h-4 accent-amber-500">
+                    <span class="text-[11px] leading-relaxed text-slate-300">
+                        <strong class="text-white">Show set code on every page</strong><br>
+                        Prints the set code in the footer so you know which version a photo came from.
+                    </span>
+                </label>
+            </div>
+
+            <!-- Section: answer key editor -->
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-[11px] font-bold text-amber-300 uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-key"></i> Answer Key <span id="akCount" class="text-slate-400 normal-case"></span>
+                    </h3>
+                    <button onclick="resetToGenerated()" title="Discard all manual edits and re-render the generated answers"
+                        class="text-[10px] font-semibold text-slate-400 hover:text-white px-2 py-1 rounded border border-slate-700 hover:border-slate-500 transition">
+                        Reset edits
+                    </button>
+                </div>
+                <p class="text-[10px] text-slate-400 mb-3 leading-relaxed">
+                    Type directly into any box to fix an answer (KaTeX / LaTeX supported, wrap in <code class="text-amber-300">$$</code>
+                    for display). Use the ↻ button to re-roll a single question.
+                </p>
+                <div id="answerKeyList" class="space-y-3"></div>
+            </div>
+        </div>
+    </aside>
+
+    <script>
+        // ============================================================
+        //  Storage keys  (ADMIN_KEY is shared with index.html / app.js)
+        // ============================================================
+        const STORE_KEY = 'gct_algebra_worksheet_v1';
+        const ADMIN_KEY = 'gct_adminAccess';
+        const WA_KEY = 'gct_waNumber';
+        const ADMIN_CODE = 'admin-access';
+
+        const KATEX_OPTS = {
+            delimiters: [
+                { left: '$$', right: '$$', display: true },
+                { left: '$', right: '$', display: false }
+            ],
+            throwOnError: false
+        };
+
+        // ============================================================
+        //  Helpers
+        // ============================================================
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function getRandomNonZero(min, max) {
+            let val = 0;
+            while (val === 0) val = getRandomInt(min, max);
+            return val;
+        }
+
+        function pick(arr) {
+            return arr[getRandomInt(0, arr.length - 1)];
+        }
+
+        function shuffle(arr) {
+            const a = arr.slice();
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function formatPoly(coef, symbol, isFirst = false) {
+            if (coef === 0) return '';
+            const sign = coef > 0 ? (isFirst ? '' : ' + ') : (isFirst ? '-' : ' - ');
+            const absCoef = Math.abs(coef);
+            const coefStr = (absCoef === 1 && symbol !== '') ? '' : absCoef;
+            return `${sign}${coefStr}${symbol}`;
+        }
+
+        function renderMath(el) {
+            if (el && window.renderMathInElement) renderMathInElement(el, KATEX_OPTS);
+        }
+
+        function isAdmin() {
+            return localStorage.getItem(ADMIN_KEY) === '1';
+        }
+
+        // ============================================================
+        //  Question generators  (same algebra types as the A4 generator)
+        // ============================================================
+        const QuestionGenerators = [
+            // 1 · Binomial square expansion  (ax + b)^2
+            {
+                name: 'Binomial Expansion',
+                gen: () => {
+                    const a = getRandomNonZero(1, 4);
+                    const b = getRandomNonZero(-8, 8);
+                    const v = pick(['x', 'y', 'a', 'b']);
+                    const t1 = a === 1 ? v : `${a}${v}`;
+                    const expr = `(${t1} ${b > 0 ? '+' : '-'} ${Math.abs(b)})^2`;
+                    const ans = `${formatPoly(a * a, v + '^2', true)}${formatPoly(2 * a * b, v)}${formatPoly(b * b, '')}`;
+                    return { question: `Expand and simplify: $${expr}$`, answer: `$${ans}$` };
+                }
+            },
+
+            // 2 · Binomial cube expansion  (x ± a)^3
+            {
+                name: 'Cubic Expansion',
+                gen: () => {
+                    const a = getRandomNonZero(-5, 5);
+                    const v = pick(['x', 'y', 'z']);
+                    const expr = `(${v} ${a > 0 ? '+' : '-'} ${Math.abs(a)})^3`;
+                    const ans = `${v}^3${formatPoly(3 * a, v + '^2')}${formatPoly(3 * a * a, v)}${formatPoly(a * a * a, '')}`;
+                    return { question: `Expand fully using identity: $${expr}$`, answer: `$${ans}$` };
+                }
+            },
+
+            // 3 · Roots of a monic quadratic
+            {
+                name: 'Quadratic Equations',
+                gen: () => {
+                    const r1 = getRandomInt(-7, 7);
+                    let r2 = getRandomInt(-7, 7);
+                    if (r1 === 0 && r2 === 0) r2 = 3;
+                    const b = -(r1 + r2);
+                    const c = r1 * r2;
+                    const quad = `x^2${formatPoly(b, 'x')}${formatPoly(c, '')} = 0`;
+                    return {
+                        question: `Find the roots of the quadratic equation: $${quad}$`,
+                        answer: `$${formatRoots(r1, r2)}$`
+                    };
+                }
+            },
+
+            // 4 · Quadratic with a leading coefficient  a(x - r1)(x - r2) = 0
+            {
+                name: 'Quadratic Equations',
+                gen: () => {
+                    const a = getRandomInt(2, 4);
+                    const r1 = getRandomInt(-4, 4);
+                    const r2 = getRandomInt(-6, 6);
+                    const b = -a * (r1 + r2);
+                    const c = a * r1 * r2;
+                    const quad = `${a}x^2${formatPoly(b, 'x')}${formatPoly(c, '')} = 0`;
+                    return {
+                        question: `Solve for $x$ by factoring: $${quad}$`,
+                        answer: `$${formatRoots(r1, r2)}$`
+                    };
+                }
+            },
+
+            // 5 · Product of difference of squares  (ax + b)(ax - b)
+            {
+                name: 'Algebraic Identities',
+                gen: () => {
+                    const a = getRandomInt(1, 4);
+                    const b = getRandomInt(1, 7);
+                    const t1 = a === 1 ? 'x' : `${a}x`;
+                    return {
+                        question: `Multiply and simplify: $(${t1} + ${b})(${t1} - ${b})$`,
+                        answer: `$${formatPoly(a * a, 'x^2', true)} - ${b * b}$`
+                    };
+                }
+            },
+
+            // 6 · Cubic with a difference-of-squares factor set
+            {
+                name: 'Polynomial Roots',
+                gen: () => {
+                    const r1 = getRandomInt(-3, 3);
+                    const r2 = getRandomNonZero(1, 3);
+                    const k = r2 * r2;
+                    const cubic = `x^3${formatPoly(-r1, 'x^2')}${formatPoly(-k, 'x')}${formatPoly(r1 * k, '')} = 0`;
+                    return {
+                        question: `Find all real roots of: $${cubic}$`,
+                        answer: `$${formatRoots(r1, r2, -r2)}$`
+                    };
+                }
+            },
+
+            // 7 · Factorise a perfect-square trinomial
+            {
+                name: 'Factorisation',
+                gen: () => {
+                    const m = getRandomNonZero(-6, 6);
+                    let n = getRandomNonZero(-6, 6);
+                    if (n === m) n = m > 0 ? m - 1 : m + 1;
+                    if (n === 0) n = 1;
+                    const b = m + n;
+                    const c = m * n;
+                    const expr = `x^2${formatPoly(b, 'x')}${formatPoly(c, '')}`;
+                    return {
+                        question: `Factorise completely: $${expr}$`,
+                        answer: `$$(x ${m >= 0 ? '+' : '-'} ${Math.abs(m)})(x ${n >= 0 ? '+' : '-'} ${Math.abs(n)})$`
+                    };
+                }
+            },
+
+            // 8 · Completing the square
+            {
+                name: 'Completing the Square',
+                gen: () => {
+                    const h = getRandomInt(1, 6);
+                    const k = getRandomNonZero(-9, 9);
+                    const b = -2 * h;
+                    const c = h * h + k;
+                    const expr = `x^2${formatPoly(b, 'x')}${formatPoly(c, '')}`;
+                    const tail = k === 0 ? '' : formatPoly(k, '', false);
+                    return {
+                        question: `Write $${expr}$ in completed-square form.`,
+                        answer: `$(x - ${h})^2${tail}$`
+                    };
+                }
+            },
+
+            // 9 · Evaluate an expression at a given value
+            {
+                name: 'Substitution',
+                gen: () => {
+                    const v = pick(['x', 'y', 'a']);
+                    const o1 = getRandomInt(-6, 6);
+                    const o2 = getRandomInt(-5, 5);
+                    const p = getRandomInt(1, 4);
+                    const val = getRandomInt(-6, 6);
+
+                    const terms = [];
+                    if (o1 !== 0) terms.push(formatPoly(o1, v + '^2', true));
+                    if (o2 !== 0) terms.push(o1 === 0 ? formatPoly(o2, v, true) : formatPoly(o2, v));
+                    const expr = terms.length ? terms.join('') : '0';
+                    const value = p * (o1 * val * val + o2 * val);
+
+                    return {
+                        question: `If $${v} = ${val}$, evaluate $${p}\\left(${expr}\\right)$.`,
+                        answer: `$${value}$`
+                    };
+                }
+            }
+        ];
+
+        function formatRoots(...roots) {
+            return roots.map(r => `x = ${r}`).join(', \\quad ');
+        }
+
+        // ============================================================
+        //  Data
+        // ============================================================
+        let data = null;           // { setLabel, perPage, pages, showAnswers, showSet, questions[] }
+        let typeBag = [];          // bag-shuffle bag of generator indices
+        let originalAnswers = {}; // pristine generated answers, for "Reset edits"
+
+        function nextTypeIndex() {
+            if (typeBag.length === 0) {
+                typeBag = shuffle(QuestionGenerators.map((_, i) => i));
+            }
+            return typeBag.pop();
+        }
+
+        function makeSetCode() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let s = '';
+            for (let i = 0; i < 5; i++) s += chars[getRandomInt(0, chars.length - 1)];
+            return 'AX-' + s;
+        }
+
+        function buildQuestion(number) {
+            const tIdx = nextTypeIndex();
+            const gen = QuestionGenerators[tIdx];
+            const out = gen.gen();
+            return {
+                number: number,
+                type: tIdx,
+                typeName: gen.name,
+                question: out.question,
+                answer: out.answer
+            };
+        }
+
+        function newWorksheet(prefs) {
+            const perPage = (prefs && prefs.perPage) || 12;
+            const pages = (prefs && prefs.pages) || 10;
+            const total = perPage * pages;
+            typeBag = [];
+            const questions = [];
+            for (let i = 1; i <= total; i++) questions.push(buildQuestion(i));
+            return {
+                setLabel: makeSetCode(),
+                perPage: perPage,
+                pages: pages,
+                showAnswers: false,
+                showSet: false,
+                questions: questions
+            };
+        }
+
+        function save() {
+            try {
+                localStorage.setItem(STORE_KEY, JSON.stringify(data));
+            } catch (e) {
+                console.warn('Could not save worksheet', e);
+            }
+        }
+
+        function load() {
+            try {
+                const raw = localStorage.getItem(STORE_KEY);
+                if (!raw) return null;
+                const parsed = JSON.parse(raw);
+                if (!parsed || !Array.isArray(parsed.questions) || !parsed.questions.length) return null;
+                // Tolerate older shapes
+                parsed.perPage = parsed.perPage || 12;
+                parsed.pages = parsed.questions.length / parsed.perPage;
+                parsed.showAnswers = !!parsed.showAnswers;
+                parsed.showSet = !!parsed.showSet;
+                parsed.setLabel = parsed.setLabel || makeSetCode();
+                return parsed;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // ============================================================
+        //  Render
+        // ============================================================
+        function render() {
+            const container = document.getElementById('worksheetContainer');
+            container.innerHTML = '';
+
+            const admin = isAdmin();
+            const perPage = data.perPage;
+            const pageCount = Math.ceil(data.questions.length / perPage);
+
+            for (let p = 0; p < pageCount; p++) {
+                container.appendChild(buildQuestionPage(p, pageCount, admin));
+            }
+
+            if (admin && data.showAnswers) {
+                const perKeyPage = 30;
+                const keyPages = Math.ceil(data.questions.length / perKeyPage);
+                for (let k = 0; k < keyPages; k++) {
+                    container.appendChild(buildKeyPage(k, keyPages, pageCount));
+                }
+            }
+
+            // Admin drawer
+            if (admin) {
+                document.getElementById('cfgPerPage').value = String(data.perPage);
+                document.getElementById('cfgPages').value = String(data.pages);
+                document.getElementById('cfgShowAnswers').checked = data.showAnswers;
+                document.getElementById('cfgShowSet').checked = data.showSet;
+                document.getElementById('cfgWa').value = localStorage.getItem(WA_KEY) || '';
+            }
+
+            updateBar(pageCount);
+            renderMath(container);
+            renderAnswerKeyList();
+        }
+
+        function updateBar(pageCount) {
+            document.getElementById('barSetLabel').textContent = 'Set ' + data.setLabel;
+            document.getElementById('barPageInfo').textContent =
+                pageCount + (pageCount === 1 ? ' page' : ' pages') + ' · ' + data.questions.length + ' questions';
+            const state = document.getElementById('barAdminState');
+            state.textContent = isAdmin() ? 'ADMIN MODE' : 'student view';
+            state.className = isAdmin()
+                ? 'text-amber-400 font-bold'
+                : 'text-slate-400';
+        }
+
+        function buildQuestionPage(pageIdx, pageCount, admin) {
+            const pageNum = pageIdx + 1;
+            const el = document.createElement('div');
+            el.className = 'a4-page exam-page';
+
+            const setLine = data.showSet
+                ? `<span>Set ${escapeHtml(data.setLabel)}</span>`
+                : `<span>Algebra Practice &amp; Problem Solving</span>`;
+
+            const header = pageNum === 1
+                ? `
+                <div class="border-b-2 border-slate-900 pb-3 shrink-0">
+                    <div class="flex justify-between items-start gap-3">
+                        <div>
+                            <h1 class="text-xl font-extrabold text-slate-900 tracking-tight">ADVANCED ALGEBRA &amp; EQUATIONS</h1>
+                            <p class="text-[11px] text-slate-600 font-medium mt-0.5">Topic: Expansions, Powers &amp; Root Finding</p>
+                        </div>
+                        <div class="text-right shrink-0">
+                            <span class="text-[10px] font-bold bg-slate-100 border border-slate-300 px-2 py-1 rounded">SET ${escapeHtml(data.setLabel)}</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4 text-[10px] font-semibold text-slate-700 mt-3 pt-2 border-t border-slate-200">
+                        <div>NAME: <span class="border-b border-slate-400 inline-block w-24"></span></div>
+                        <div>DATE: <span class="border-b border-slate-400 inline-block w-20"></span></div>
+                        <div class="text-right">SCORE: <span class="border-b border-slate-400 inline-block w-12"></span> / ${data.questions.length}</div>
+                    </div>
+                </div>`
+                : `
+                <div class="flex justify-between items-center border-b border-slate-300 pb-1.5 shrink-0 text-[10px] text-slate-500 font-medium">
+                    <span>${setLine}</span>
+                    <span>Name: ______________________</span>
+                    <span>Page ${pageNum} of ${pageCount}</span>
+                </div>`;
+
+            const slice = data.questions.slice(pageIdx * data.perPage, (pageIdx + 1) * data.perPage);
+
+            let grid = '<div class="flex-grow grid grid-cols-2 gap-x-4 gap-y-2.5 content-start">';
+            slice.forEach(q => {
+                grid += `
+                <div class="q-card">
+                    <div class="flex items-center justify-between gap-2">
+                        <span class="text-[10px] font-extrabold text-slate-800 bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded">Q${q.number}</span>
+                        <span class="text-[8px] text-slate-400 uppercase font-bold tracking-wide truncate">${escapeHtml(q.typeName)}</span>
+                    </div>
+                    <div class="text-[12.5px] font-medium leading-snug text-slate-900">${q.question}</div>
+                </div>`;
+            });
+            grid += '</div>';
+
+            const footer = `
+                <div class="border-t border-slate-200 pt-1.5 flex justify-between items-center text-[9px] text-slate-400 shrink-0">
+                    <span>Answer in your notebook · Photo &amp; WhatsApp to your teacher</span>
+                    <span>${escapeHtml(data.setLabel)} — Page ${pageNum} of ${pageCount}</span>
+                </div>`;
+
+            el.innerHTML = header + grid + footer;
+            return el;
+        }
+
+        function buildKeyPage(kIdx, kCount, questionPageCount) {
+            const el = document.createElement('div');
+            el.className = 'a4-page answer-key-page';
+            const per = 30;
+            const start = kIdx * per;
+            const slice = data.questions.slice(start, start + per);
+
+            let grid = '<div class="flex-grow grid grid-cols-2 gap-x-5 gap-y-1 content-start">';
+            slice.forEach(q => {
+                grid += `
+                <div class="flex items-center justify-between gap-2 border-b border-slate-100 py-1 px-1.5 text-[10px]">
+                    <span class="font-extrabold text-slate-600 shrink-0">Q${q.number}.</span>
+                    <span class="font-semibold text-emerald-700 text-right overflow-x-auto" data-ak-answer="${q.number}">${q.answer}</span>
+                </div>`;
+            });
+            grid += '</div>';
+
+            el.innerHTML = `
+                <div class="border-b-2 border-emerald-600 pb-2.5 flex justify-between items-center shrink-0">
+                    <div>
+                        <h2 class="text-lg font-extrabold text-emerald-800">SOLUTIONS &amp; ANSWER KEY</h2>
+                        <p class="text-[10px] text-slate-500">Set ${escapeHtml(data.setLabel)} · Questions 1-${data.questions.length}</p>
+                    </div>
+                    <span class="text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 px-2.5 py-1 rounded">KEY ${kIdx + 1} / ${kCount}</span>
+                </div>
+                ${grid}
+                <div class="border-t border-slate-200 pt-1.5 flex justify-between items-center text-[9px] text-slate-400 shrink-0">
+                    <span>Confidential — for marking only</span>
+                    <span>${escapeHtml(data.setLabel)}</span>
+                </div>`;
+            return el;
+        }
+
+        // ============================================================
+        //  Admin: answer key editor
+        // ============================================================
+        function renderAnswerKeyList() {
+            const box = document.getElementById('answerKeyList');
+            if (!box) return;
+            if (!isAdmin()) {
+                box.innerHTML = '<p class="text-[11px] text-slate-500">Admin mode is off.</p>';
+                return;
+            }
+
+            document.getElementById('akCount').textContent = `(${data.questions.length})`;
+
+            const perPage = data.perPage;
+            let html = '';
+
+            for (let page = 0; page * perPage < data.questions.length; page++) {
+                const slice = data.questions.slice(page * perPage, (page + 1) * perPage);
+                html += `
+                <div class="border border-slate-700 rounded-lg overflow-hidden">
+                    <div class="px-3 py-1.5 bg-slate-800 text-[10px] font-bold text-slate-300 uppercase tracking-wider flex justify-between">
+                        <span>Page ${page + 1}</span>
+                        <span>Q${slice[0].number}–Q${slice[slice.length - 1].number}</span>
+                    </div>
+                    <div class="divide-y divide-slate-800">`;
+
+                slice.forEach(q => {
+                    const edited = originalAnswers[q.number] !== undefined &&
+                        originalAnswers[q.number] !== q.answer;
+                    html += `
+                        <div class="px-3 py-2 bg-slate-900/60 space-y-1.5">
+                            <div class="flex items-center justify-between gap-2">
+                                <span class="text-[10px] font-extrabold text-amber-300 shrink-0">Q${q.number}</span>
+                                <div class="flex items-center gap-1.5 shrink-0">
+                                    ${edited ? '<span class="text-[9px] font-bold text-amber-400 bg-amber-500/15 px-1.5 py-0.5 rounded">EDITED</span>' : ''}
+                                    <span class="text-[9px] text-slate-500 truncate max-w-[90px]">${escapeHtml(q.typeName)}</span>
+                                    <button onclick="randomiseOne(${q.number})" title="Re-roll question ${q.number}"
+                                        class="w-6 h-6 rounded bg-slate-700 hover:bg-amber-500 hover:text-slate-900 text-slate-200 text-[10px] flex items-center justify-center transition">
+                                        <i class="fa-solid fa-rotate"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="text-[10px] text-slate-400 leading-snug">${stripMath(q.question)}</div>
+                            <input type="text" value="${escapeAttr(q.answer)}" spellcheck="false"
+                                oninput="editAnswer(${q.number}, this.value)"
+                                class="w-full bg-slate-950 border border-slate-700 text-emerald-300 font-mono text-[11px] rounded-md px-2 py-1.5 focus:border-amber-500 focus:outline-none">
+                        </div>`;
+                });
+
+                html += '</div></div>';
+            }
+
+            box.innerHTML = html;
+        }
+
+        function editAnswer(number, value) {
+            const q = data.questions.find(x => x.number === number);
+            if (!q) return;
+            q.answer = value;
+            save();
+            refreshAnswerDisplays();
+        }
+
+        function refreshAnswerDisplays() {
+            const container = document.getElementById('worksheetContainer');
+            if (!container) return;
+            container.querySelectorAll('[data-ak-answer]').forEach(el => {
+                const n = parseInt(el.getAttribute('data-ak-answer'), 10);
+                const q = data.questions.find(x => x.number === n);
+                if (q) el.innerHTML = q.answer;
+            });
+            renderMath(container);
+        }
+
+        // ============================================================
+        //  Admin actions
+        // ============================================================
+        function randomiseOne(number) {
+            const idx = data.questions.findIndex(x => x.number === number);
+            if (idx === -1) return;
+            const tIdx = data.questions[idx].type;
+            const gen = QuestionGenerators[tIdx];
+            const out = gen.gen();
+            data.questions[idx].question = out.question;
+            data.questions[idx].answer = out.answer;
+            originalAnswers[number] = out.answer;
+            save();
+            render();
+        }
+
+        function randomiseAll() {
+            if (!confirm('Generate a completely new question set?\n\nAll current answers (including manual edits) will be replaced.')) return;
+            const prefs = { perPage: data.perPage, pages: data.pages };
+            data = newWorksheet(prefs);
+            snapshotAnswers();
+            save();
+            render();
+        }
+
+        function resetToGenerated() {
+            if (!confirm('Discard all manual answer edits?')) return;
+            data.questions.forEach(q => {
+                if (originalAnswers[q.number] !== undefined) q.answer = originalAnswers[q.number];
+            });
+            save();
+            render();
+        }
+
+        function snapshotAnswers() {
+            originalAnswers = {};
+            data.questions.forEach(q => { originalAnswers[q.number] = q.answer; });
+        }
+
+        function updateConfig() {
+            const perPage = parseInt(document.getElementById('cfgPerPage').value, 10) || 12;
+            const pages = parseInt(document.getElementById('cfgPages').value, 10) || 10;
+            const total = perPage * pages;
+            const old = data.questions;
+
+            if (total === old.length) {
+                data.perPage = perPage;
+                data.pages = pages;
+            } else if (total < old.length) {
+                data.questions = old.slice(0, total);
+                data.perPage = perPage;
+                data.pages = pages;
+            } else {
+                data.questions = old.slice();
+                while (data.questions.length < total) {
+                    data.questions.push(buildQuestion(data.questions.length + 1));
+                }
+                data.perPage = perPage;
+                data.pages = pages;
+            }
+
+            data.questions.forEach((q, i) => { q.number = i + 1; });
+            snapshotAnswers();
+            save();
+            render();
+        }
+
+        function toggleShowAnswers(on) {
+            data.showAnswers = on;
+            save();
+            render();
+        }
+
+        function toggleShowSet(on) {
+            data.showSet = on;
+            save();
+            render();
+        }
+
+        function saveWaNumber() {
+            const val = document.getElementById('cfgWa').value.replace(/\D/g, '');
+            document.getElementById('cfgWa').value = val;
+            if (val) localStorage.setItem(WA_KEY, val);
+            else localStorage.removeItem(WA_KEY);
+        }
+
+        // ============================================================
+        //  Admin drawer / lock
+        // ============================================================
+        function toggleAdminDrawer(force) {
+            const d = document.getElementById('adminDrawer');
+            const b = document.getElementById('adminBackdrop');
+            const open = typeof force === 'boolean' ? force : d.classList.contains('hidden');
+            d.classList.toggle('hidden', !open);
+            b.classList.toggle('hidden', !open);
+        }
+
+        function lockAdmin() {
+            if (!confirm('Lock admin mode?\n\nYou will need to type "admin-access" in the GCT Module search bar again.')) return;
+            localStorage.removeItem(ADMIN_KEY);
+            toggleAdminDrawer(false);
+            location.reload();
+        }
+
+        // ============================================================
+        //  WhatsApp
+        // ============================================================
+        function sendWhatsApp() {
+            const num = (localStorage.getItem(WA_KEY) || '').replace(/\D/g, '');
+            const msg = `Hi Teacher, here are my answers for the Algebra Worksheet (Set ${data.setLabel}, ${data.questions.length} questions). My name is ______.`;
+            if (!num) {
+                alert('No teacher WhatsApp number is set yet.\n\nAsk your teacher to add it, or save your written work and send the photos directly to their number.');
+                return;
+            }
+            window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        // ============================================================
+        //  Print
+        // ============================================================
+        function triggerPrint(mode) {
+            const body = document.body;
+            body.classList.remove('print-questions-only', 'print-key-only');
+            if (mode === 'questions') body.classList.add('print-questions-only');
+            if (mode === 'key') {
+                if (!isAdmin()) { alert('Admin mode required to print the answer key.'); return; }
+                body.classList.add('print-key-only');
+            }
+            window.print();
+            setTimeout(() => body.classList.remove('print-questions-only', 'print-key-only'), 400);
+        }
+
+        // ============================================================
+        //  Utilities
+        // ============================================================
+        function escapeHtml(str) {
+            return String(str == null ? '' : str)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        function escapeAttr(str) {
+            return escapeHtml(str).replace(/"/g, '&quot;');
+        }
+
+        function stripMath(html) {
+            return escapeHtml(String(html).replace(/\$/g, ''));
+        }
+
+        // ============================================================
+        //  Boot
+        // ============================================================
+        window.addEventListener('load', () => {
+            data = load();
+            if (!data) {
+                data = newWorksheet({ perPage: 12, pages: 10 });
+                snapshotAnswers();
+                save();
+            } else {
+                snapshotAnswers();
+            }
+
+            const admin = isAdmin();
+            const btn = document.getElementById('btnAdmin');
+            if (admin) {
+                btn.classList.remove('hidden');
+                btn.classList.add('flex');
+            } else {
+                document.getElementById('printKeyBtn').classList.add('hidden');
+            }
+
+            render();
+        });
+    </script>
+
+    <style>
+        /* Font Awesome is loaded via the CDN above; keep the icons aligned */
+        .fa-solid.fa-user-shield, .fa-solid.fa-sliders, .fa-solid.fa-eye,
+        .fa-solid.fa-key, .fa-solid.fa-rotate, .fa-solid.fa-xmark, .fa-solid.fa-shuffle {
+            line-height: 1;
+        }
+    </style>
+</body>
+</html>
