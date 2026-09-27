@@ -152,6 +152,69 @@ function runNightLightSweep(on, x, y) {
         : 'nightSweepOff 0.9s ease-out forwards';
 }
 
+// ===== Admin access (unlocked by typing "admin-access" in the search bar) =====
+const ADMIN_KEY = 'gct_adminAccess';
+const ADMIN_CODE = 'admin-access';
+const WORKSHEET_URL = 'algebra_worksheet.html';
+
+function isAdminUnlocked() {
+    return localStorage.getItem(ADMIN_KEY) === '1';
+}
+
+function refreshAdminBadge() {
+    const badge = document.getElementById('wsBadge');
+    if (!badge) return;
+    if (isAdminUnlocked()) {
+        badge.textContent = 'Admin';
+        badge.className = 'bg-amber-100 text-amber-800 text-[10px] px-1.5 py-0.5 rounded font-semibold';
+    } else {
+        badge.textContent = 'PDF';
+        badge.className = 'bg-slate-100 text-slate-600 text-[10px] px-1.5 py-0.5 rounded font-semibold';
+    }
+}
+
+function showAdminPanel(dropdown) {
+    localStorage.setItem(ADMIN_KEY, '1');
+    const input = document.getElementById('searchInput');
+    if (input) input.value = '';
+    refreshAdminBadge();
+
+    if (!dropdown) return;
+    dropdown.classList.remove('hidden');
+    dropdown.innerHTML = `
+        <div class="px-4 py-3 bg-amber-50 border-b border-amber-200">
+            <div class="flex items-center gap-2 text-xs font-bold text-amber-900">
+                <i class="fa-solid fa-user-shield"></i>
+                <span>Admin mode unlocked</span>
+            </div>
+            <p class="text-[11px] text-amber-800 mt-1 leading-relaxed">
+                You can now edit and randomise the answers on the Algebra Worksheet.
+                The unlock stays on this device until you press <strong>Lock</strong> there.
+            </p>
+        </div>
+        <a href="${WORKSHEET_URL}" class="flex items-center justify-between px-4 py-2.5 hover:bg-brand-50 transition-colors border-b border-slate-100 text-slate-700 no-underline">
+            <span class="text-xs font-semibold">Open Algebra Worksheet admin panel</span>
+            <i class="fa-solid fa-arrow-right text-[10px] text-brand-500"></i>
+        </a>
+        <button onclick="lockAdmin()" class="w-full text-left px-4 py-2.5 hover:bg-slate-50 transition-colors flex items-center justify-between text-slate-600">
+            <span class="text-xs font-semibold">Lock admin mode</span>
+            <i class="fa-solid fa-lock text-[10px]"></i>
+        </button>
+    `;
+}
+
+function lockAdmin() {
+    localStorage.removeItem(ADMIN_KEY);
+    refreshAdminBadge();
+    hideSearch(document.getElementById('searchResults'));
+    const input = document.getElementById('searchInput');
+    if (input) {
+        input.value = '';
+        input.placeholder = 'Admin locked. Type "admin-access" to unlock';
+        setTimeout(() => { input.placeholder = 'Search topics, scales, formulas...'; }, 4000);
+    }
+}
+
 // ===== Search across lessons =====
 function initSearch() {
     const input = document.getElementById('searchInput');
@@ -164,9 +227,12 @@ function initSearch() {
     dropdown.className = 'hidden absolute top-full left-0 right-0 mt-2 z-50 bg-white border border-slate-200 rounded-xl shadow-lg overflow-hidden';
     wrap.appendChild(dropdown);
 
+    refreshAdminBadge();
+
     input.addEventListener('input', () => {
         const query = input.value.trim();
         if (!query) { hideSearch(dropdown); return; }
+        if (query.toLowerCase() === ADMIN_CODE) { showAdminPanel(dropdown); return; }
         renderSearchResults(query, dropdown);
     });
 
